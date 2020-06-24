@@ -1,0 +1,458 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package view;
+
+import control.HopDongDAO;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import model.BienLaiNhap;
+import model.*;
+import control.*;
+import java.util.*;
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author Duong
+ */
+public class GDXacNhanNhapHang extends javax.swing.JFrame {
+
+    /**
+     * Creates new form GDXacNhanNhapHang
+     */
+    private ArrayList<RecordSanPham> listMatHangDaChon = new ArrayList();
+    int tongTien = 0;
+    int tongSoLuong = 0;
+    long thanhToan = 0;
+    long traLai = 0;
+    private BienLaiNhap bienLaiNhap;
+    private NhaCungCap ncc;
+    private NhanVien nv;
+    private String ngayLap;
+    private Kho kho;
+    private String maBienLai;
+    private String ghiChu;
+    private String dienGiai;
+
+    public GDXacNhanNhapHang() {
+        initComponents();
+    }
+
+    public GDXacNhanNhapHang(ArrayList<RecordSanPham> listMatHangDaChon, NhaCungCap ncc, NhanVien nv, String ngayLap, Kho kho, String maBienLai, String dienGiai, String ghiChu) {
+        initComponents();
+        this.listMatHangDaChon = listMatHangDaChon;
+        tinhTongTien();
+        addListenerText(jTextFieldThanhToan);
+        this.ncc = ncc;
+        System.out.println("chuyen ncc chuyen sang  xac nhan" + ncc.getTen());
+        this.nv = nv;
+        this.ngayLap = ngayLap;
+        this.kho = kho;
+        this.maBienLai = maBienLai;
+        this.dienGiai = dienGiai;
+        this.ghiChu = ghiChu;
+    }
+
+    String dinhDangTien(long number) {
+        DecimalFormat df = new DecimalFormat("#,##0");
+        String s = df.format(new BigDecimal(number));
+        return s;
+    }
+
+    void tinhTongTien() {
+        tongTien = 0;
+        for (int i = 0; i < listMatHangDaChon.size(); i++) {
+            RecordSanPham recordSanPham = listMatHangDaChon.get(i);
+            SanPham pham = recordSanPham.getPham();
+            int soLuong = recordSanPham.getSoLuong();
+            int sl = recordSanPham.getSoLuong();
+            String maMH = pham.getMaMatHang();
+            String tenM = pham.getTenMatHang();
+            String hsd = pham.getHanSuDung();
+            String dvt = pham.getDonViTinh();
+            int gia = pham.getGia();
+            tongTien += gia * soLuong;
+        }
+        jTextFieldTongTien.setText(dinhDangTien(tongTien));
+    }
+
+    //thêm sự kiện ô nhập đơn giá định dạng money
+    void addListenerText(JTextField field) {
+        field.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                warn();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                warn();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                warn();
+            }
+
+            public void warn() {
+
+            }
+        });
+        field.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                field.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                try {
+                    if (!field.getText().equals("")) {
+                        DecimalFormat df = new DecimalFormat("#,##0");
+                        thanhToan = Integer.parseInt(field.getText());
+                        String s = df.format(new BigDecimal(field.getText()));
+                        field.setText(s);
+                        jTextFieldTraLai.setText(dinhDangTien(thanhToan - tongTien));
+                    }
+                } catch (Exception e2) {
+                    JOptionPane.showMessageDialog(field, "Only numbers are allowed", "Warning", JOptionPane.WARNING_MESSAGE);
+                    e2.printStackTrace();
+                    field.setText("");
+                }
+            }
+        });
+
+        field.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldTongTien = new javax.swing.JTextField();
+        jTextFieldThanhToan = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldTraLai = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButtonDongBillNotIn = new javax.swing.JButton();
+        jComboBoxHinhThucTra = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jCheckBoxNoNCC = new javax.swing.JCheckBox();
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Bạn có muốn thanh toán không?");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_wallet_48px_1.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel1))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Tổng tiền");
+
+        jTextFieldTongTien.setEditable(false);
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Thanh toán");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Trả lại");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_print_16px.png"))); // NOI18N
+        jButton1.setText("Đóng hóa đơn and in ");
+
+        jButtonDongBillNotIn.setText("Đóng hóa đơn không in");
+        jButtonDongBillNotIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDongBillNotInActionPerformed(evt);
+            }
+        });
+
+        jComboBoxHinhThucTra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBoxHinhThucTra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tiền mặt", "Chuyển khoản", "Quẹt thẻ" }));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setText("Hình thức trả");
+
+        jCheckBoxNoNCC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jCheckBoxNoNCC.setText("Nợ nhà cung cấp");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(118, 118, 118)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBoxNoNCC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonDongBillNotIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxHinhThucTra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                                .addComponent(jTextFieldTongTien)
+                                .addComponent(jTextFieldTraLai)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldTraLai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxHinhThucTra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jCheckBoxNoNCC))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonDongBillNotIn)
+                .addGap(26, 26, 26))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+    int countDigit(int number) {
+        int count = 0;
+        while (number > 0) {
+            number /= 10;
+            count += 1;
+        }
+        return count;
+    }
+    private String maCongNO;
+
+    public void createMatCN() {
+        CongNoDAO aO = new CongNoDAO();
+        ArrayList<CongNo> listCongNo = aO.getAllCongNo();
+        int count = countDigit(listCongNo.size() + 1);
+        this.maCongNO = "CN-";
+        int rest = 7 - count;
+        while (rest > 0) {
+            maCongNO += '0';
+            rest--;
+        }
+        this.maCongNO = this.maCongNO + "" + listCongNo.size();
+    }
+
+    private void jButtonDongBillNotInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDongBillNotInActionPerformed
+
+        if (jCheckBoxNoNCC.isSelected()) {
+
+            HopDongDAO aO = new HopDongDAO();
+            HopDong dong = aO.getHopDongByNcc(ncc);
+            ArrayList<BienLaiNhap> listBienLaiNhap = new ArrayList<>();
+            BienLaiNhapDAO bienLaiNhapDAO = new BienLaiNhapDAO();
+            for (int i = 0; i < listMatHangDaChon.size(); i++) {
+                RecordSanPham recordSanPham = listMatHangDaChon.get(i);
+                SanPham sp = recordSanPham.getPham();
+                int soLuong = recordSanPham.getSoLuong();
+                BienLaiNhap bienLaiNhap = new BienLaiNhap();
+                bienLaiNhap.setMaBienLai(this.maBienLai);
+                bienLaiNhap.setHopDong(dong);
+                bienLaiNhap.setNhanVien(nv);
+                bienLaiNhap.setKho(kho);
+                bienLaiNhap.setNgayLap(ngayLap);
+                bienLaiNhap.setSoLuong(soLuong);
+                bienLaiNhap.setTongCong(tongTien);
+                bienLaiNhapDAO.themBienLaiNhapCongNo(bienLaiNhap, sp);
+            }
+
+            PhieuThuChi phieuThuChi = new PhieuThuChi();
+            PhieuThuChiDAO phieuThuChiDAO = new PhieuThuChiDAO();
+            phieuThuChi.setChuyenKhoan(jComboBoxHinhThucTra.getSelectedItem().toString());
+            phieuThuChi.setLoaiPhieu("Phiếu chi công nợ");
+            phieuThuChi.setTenDoiTuong(ncc.getTen());
+            phieuThuChi.setNv(nv);
+            phieuThuChi.setSoTien(0);
+            phieuThuChi.setLyDo(ghiChu);
+            phieuThuChi.setDienGiai(dienGiai);
+            phieuThuChi.setSoPhieu(this.maBienLai);
+            phieuThuChi.setNgayLap(ngayLap);
+            phieuThuChiDAO.themPhieuThuChi(phieuThuChi);
+
+            CongNo cn = new CongNo();
+            CongNoDAO congNoDao = new CongNoDAO();
+            cn.setCap(ncc);
+            cn.setMaSoThue(this.maCongNO);
+            cn.setSoTienNo(tongTien);
+            congNoDao.themCongNo(cn);
+        } else {
+
+            PhieuThuChi phieuThuChi = new PhieuThuChi();
+            PhieuThuChiDAO phieuThuChiDAO = new PhieuThuChiDAO();
+            phieuThuChi.setChuyenKhoan(jComboBoxHinhThucTra.getSelectedItem().toString());
+            phieuThuChi.setLoaiPhieu("Phiếu chi nhập hàng");
+            phieuThuChi.setTenDoiTuong(ncc.getTen());
+            phieuThuChi.setNv(nv);
+            phieuThuChi.setSoTien(tongTien);
+            phieuThuChi.setLyDo(ghiChu);
+            phieuThuChi.setDienGiai(dienGiai);
+            phieuThuChi.setSoPhieu(this.maBienLai);
+            phieuThuChi.setNgayLap(ngayLap);
+            phieuThuChiDAO.themPhieuThuChi(phieuThuChi);
+            HopDongDAO aO = new HopDongDAO();
+            HopDong dong = aO.getHopDongByNcc(ncc);
+            BienLaiNhapDAO bienLaiNhapDAO = new BienLaiNhapDAO();
+            ArrayList<BienLaiNhap> listBienLaiNhap = new ArrayList<>();
+            for (int i = 0; i < listMatHangDaChon.size(); i++) {
+                RecordSanPham recordSanPham = listMatHangDaChon.get(i);
+                SanPham sp = recordSanPham.getPham();
+                int soLuong = recordSanPham.getSoLuong();
+                BienLaiNhap bienLaiNhap = new BienLaiNhap();
+                bienLaiNhap.setMaBienLai(this.maBienLai);
+                bienLaiNhap.setHopDong(dong);
+                bienLaiNhap.setNhanVien(nv);
+                bienLaiNhap.setKho(kho);
+                bienLaiNhap.setNgayLap(ngayLap);
+                bienLaiNhap.setSoLuong(soLuong);
+                bienLaiNhap.setTongCong(tongTien);
+                bienLaiNhap.setPhieuThuChi(phieuThuChi);
+                bienLaiNhapDAO.themBienLaiNhapPhieuThuChi(bienLaiNhap, sp);
+            }
+
+        }
+        ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
+        JOptionPane.showMessageDialog(null, "Đã hoàn tất nhập hàng", "Nhập hàng thành công", JOptionPane.INFORMATION_MESSAGE, icon);
+    }//GEN-LAST:event_jButtonDongBillNotInActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GDXacNhanNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GDXacNhanNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GDXacNhanNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GDXacNhanNhapHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GDXacNhanNhapHang().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonDongBillNotIn;
+    private javax.swing.JCheckBox jCheckBoxNoNCC;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxHinhThucTra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextFieldThanhToan;
+    private javax.swing.JTextField jTextFieldTongTien;
+    private javax.swing.JTextField jTextFieldTraLai;
+    // End of variables declaration//GEN-END:variables
+}
