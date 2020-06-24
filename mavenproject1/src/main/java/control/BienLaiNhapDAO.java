@@ -259,7 +259,6 @@ public class BienLaiNhapDAO extends DAO {
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();
             con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();

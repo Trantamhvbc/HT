@@ -83,7 +83,6 @@ public class BienLaiXuatDAO extends DAO {
             stm = con.prepareStatement(sql4);
             stm.executeUpdate();
             con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();

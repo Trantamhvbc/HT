@@ -41,7 +41,6 @@ public class CongTyDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -71,7 +70,6 @@ public class CongTyDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }

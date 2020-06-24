@@ -45,13 +45,11 @@ public class SanPhamDAO extends DAO{
                 sp.setBienLaiKho(bienLaiKho);
                 listSanPham.add(sp);
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -72,7 +70,6 @@ public class SanPhamDAO extends DAO{
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +85,6 @@ public class SanPhamDAO extends DAO{
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();

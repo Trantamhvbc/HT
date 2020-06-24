@@ -39,13 +39,11 @@ public class MatHangDAO extends DAO {
                 mh.setDonViTinh(rs.getString(5));
                 listMatHang.add(mh);
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -66,7 +64,6 @@ public class MatHangDAO extends DAO {
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +79,6 @@ public class MatHangDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();

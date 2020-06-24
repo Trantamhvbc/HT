@@ -40,14 +40,12 @@ public class HoaDonBanHangDAO extends DAO {
             stm.executeUpdate();
             con.commit();
             stm.close();
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 con.rollback();
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }

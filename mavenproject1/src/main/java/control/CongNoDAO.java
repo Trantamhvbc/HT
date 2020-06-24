@@ -44,13 +44,11 @@ public class CongNoDAO extends DAO {
                 listCongNo.add(cn);
             }
             stm.close();
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
