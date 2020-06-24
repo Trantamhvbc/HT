@@ -25,7 +25,7 @@ public class NhanVienDAO extends DAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
 
-        String sql = " select * from  [NhanVien]  inner join [Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where vaiTro=N'Bán hàng'";
+        String sql = " select * from  [NhanVien]  inner join [Nguoi] on NhanVien.idNguoi=Nguoi.idNguoi where vaiTro=N'Bán hàng'";
         ArrayList<NhanVien> listNhanVien = new ArrayList<>();
         try {
             stm = con.prepareStatement(sql);

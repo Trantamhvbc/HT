@@ -30,7 +30,7 @@ public class XuatHangDAO extends DAO {
         ArrayList<Integer> listConLai = new ArrayList<>();
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String sql2 = "select SanPham.idSanPham, (BienLaiKho.soLuong-HoaDonBanHang.soLuong) as conLai  from [HoaDonBanHang] inner join [SanPham] on SanPham.idSanPham=HoaDonBanHang.idHoaDonBanHang inner join [BienLaiKho] on BienLaiKho.idBienLaiKho=SanPham.idSanPham ";
+        String sql2 = "select SanPham.idSanPham, (BienLaiKho.soLuong-SPDB.soLuong) as conLai  from [HoaDonBanHang] ,[SanPham],[SPDB] WHERE SanPham.idSanPham=SPDB.idSanPham and  BienLaiKho.idBienLaiKho=SanPham.idSanPham ";
         String sql = "   select * from [SanPham] sp inner join   [BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho \n"
                 + "               inner join  [BienLaiXuat] blx on sp.idBienLaiKho=blx.idBienLaiKho inner join [MatHang] mh on sp.idMatHang=mh.idMatHang where idKho=" + kho.getId();
         ArrayList<RecordSanPham> listSanPhamDX = new ArrayList<RecordSanPham>();

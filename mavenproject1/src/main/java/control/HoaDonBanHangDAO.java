@@ -5,10 +5,12 @@
  */
 package control;
 
+import static com.lowagie.text.pdf.PdfFileSpecification.url;
 import static control.DAO.con;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.BienLaiKho;
 import model.*;
@@ -22,34 +24,50 @@ public class HoaDonBanHangDAO extends DAO {
     public HoaDonBanHangDAO() {
         super();
     }
-
-    public void themHoaDonBanHang(HoaDonBanHang hdbh) {
+    
+    public int themHoaDonBanHang(HoaDonBanHang hdbh) {
         String soLuong = "'" + hdbh.getSoLuong() + "',";
         String ngay = "'" + hdbh.getNgay() + "',";
-        String idSanPham = "'" + hdbh.getSp().getIdSanPham() + "',";
+        String idSanPham = "'2005',";
         String soTien = "N'" + hdbh.getSoTien() + "',";
         String idNhanVien = "N'" + hdbh.getNv().getIdNhanVien() + "'";
         PreparedStatement stm = null;
         ResultSet rs = null;
         String sql2 = "insert into [HoaDonBanHang] (soLuong,ngay,idSanPham,soTien,idNhanVien) values "
-                + " (" + soLuong + ngay + idSanPham + soTien + idNhanVien + ")";
+                + " (" + soLuong + ngay +idSanPham + soTien + idNhanVien + ")";
+        int idHoaDon = 0;
         try {
-            con.setAutoCommit(false);
-           
-            stm = con.prepareStatement(sql2);
-            stm.executeUpdate();
-            con.commit();
-            stm.close();
+ 
+            PreparedStatement prstm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
+            int res = prstm.executeUpdate   ();
+            if(res >0){
+               ResultSet  result = prstm.getGeneratedKeys();
+               while(result.next()){
+                   idHoaDon =  result.getInt(1);
+               }
+            }
+            else{
+                return -1;
+            }
+            prstm.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 con.rollback();
-                stm.close();
             } catch (SQLException ex) {
                 //
             }
         }
+       SPDBDAO spDAO = new SPDBDAO();
+       for(RecordSanPham i : hdbh.getListSanPhamSelected()){
+           if( spDAO.insertRecorpSanPham(i, idHoaDon) == -1){
+               return -1;
+           }
+           
+       }
+       return 1;
     }
 
     public void themHoaDonBanHang(HoaDonBanHang hdbh, PhieuThuChi phieuThuChi) {
@@ -69,14 +87,14 @@ public class HoaDonBanHangDAO extends DAO {
 
         String soLuong = "'" + hdbh.getSoLuong() + "',";
         String ngay = "'" + hdbh.getNgay() + "',";
-        String idSanPham = "'" + hdbh.getSp().getIdSanPham() + "',";
+        //String idSanPham = "'" + hdbh.getSp().getIdSanPham() + "',";
         soTien = "N'" + hdbh.getSoTien() + "',";
         idNhanVien = "N'" + hdbh.getNv().getIdNhanVien() + "'";
         PreparedStatement stm = null;
         ResultSet rs = null;
 
         String sql2 = "insert into [HoaDonBanHang] (soLuong,ngay,idSanPham,soTien,idNhanVien) values "
-                + " values(" + soLuong + ngay + idSanPham + soTien + idNhanVien + ")";
+                + " values(" + soLuong + ngay  + soTien + idNhanVien + ")";
         try {
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
@@ -117,7 +135,6 @@ public class HoaDonBanHangDAO extends DAO {
                 SanPham sp = new SanPham();
                 sp.setIdSanPham(rs.getInt("idSanPham"));
                 hoaDonBanHang.setNv(nv);
-                hoaDonBanHang.setSp(sp);
                 hoaDonBanHang.setSoLuong(rs.getInt("soLuong"));
                 hoaDonBanHang.setSoTien(rs.getInt("soTien"));
                 hoaDonBanHangs.add(hoaDonBanHang);

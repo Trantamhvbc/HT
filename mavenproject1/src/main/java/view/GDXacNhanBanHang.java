@@ -29,14 +29,14 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
     /**
      * Creates new form GDXacNhanBanHang
      */
-    private ArrayList<HoaDonBanHang> listHDBH;
+    private HoaDonBanHang HDBH;
     private PhieuThuChi ptc;
     private int tienHang;
 
-    public GDXacNhanBanHang(int tienHang, ArrayList<HoaDonBanHang> hdbh, PhieuThuChi phieuThu) {
+    public GDXacNhanBanHang(int tienHang, HoaDonBanHang hdbh, PhieuThuChi phieuThu) {
         initComponents();
         this.ptc = phieuThu;
-        this.listHDBH = hdbh;
+        this.HDBH = hdbh;
         this.tienHang = tienHang;
         jTextFieldTongTien.setText("" + tienHang);
         addListenerText(jTextFieldKhachDua);
@@ -223,9 +223,7 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
         PhieuThuChiDAO phieuThuChiDAO=new PhieuThuChiDAO();
         phieuThuChiDAO.themPhieuThuChi(ptc);
         HoaDonBanHangDAO hoaDonBanHangDAO = new HoaDonBanHangDAO();
-        for (int i = 0; i < listHDBH.size(); i++) {
-            hoaDonBanHangDAO.themHoaDonBanHang(listHDBH.get(i));
-        }
+        hoaDonBanHangDAO.themHoaDonBanHang(HDBH);
         ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
         JOptionPane.showMessageDialog(null, "Đã thanh toán thành công cho khách hàng", "thanh toán thành công", JOptionPane.INFORMATION_MESSAGE, icon);
 

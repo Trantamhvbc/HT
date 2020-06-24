@@ -9,15 +9,19 @@
  * @author Duong
  */
 package model;
+
+import java.util.ArrayList;
+
 public class HoaDonBanHang {
     private int idHoaDonBanHang;
     private int soLuong;
     private String ngay;
-    private SanPham sp;
+    private ArrayList < RecordSanPham> listSanPhamSelected;
     private int soTien;
     private NhanVien nv;
 
     public HoaDonBanHang() {
+       this.listSanPhamSelected = new ArrayList<>();
     }
 
     public int getIdHoaDonBanHang() {
@@ -43,15 +47,20 @@ public class HoaDonBanHang {
     public void setNgay(String ngay) {
         this.ngay = ngay;
     }
-
-    public SanPham getSp() {
-        return sp;
+    public void add(RecordSanPham e){
+        this.listSanPhamSelected.add(e);
     }
 
-    public void setSp(SanPham sp) {
-        this.sp = sp;
+    public ArrayList<RecordSanPham> getListSanPhamSelected() {
+        return listSanPhamSelected;
     }
 
+    public void setListSanPhamSelected(ArrayList<RecordSanPham> listSanPhamSelected) {
+        this.listSanPhamSelected = listSanPhamSelected;
+    }
+    public RecordSanPham remove(int row){
+        return this.listSanPhamSelected.remove(row);
+    }
     public int getSoTien() {
         return soTien;
     }

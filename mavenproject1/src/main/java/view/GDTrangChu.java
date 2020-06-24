@@ -247,7 +247,7 @@ public class GDTrangChu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCongNoActionPerformed
 
     private void jButtonBanLeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBanLeActionPerformed
-        GDQLPhieuThuChi dQLPhieuThuChi = new GDQLPhieuThuChi();
+        GDBanHang dQLPhieuThuChi = new GDBanHang();
         dQLPhieuThuChi.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         dQLPhieuThuChi.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

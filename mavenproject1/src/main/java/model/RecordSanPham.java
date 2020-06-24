@@ -13,6 +13,14 @@ public class RecordSanPham {
     private SanPham pham;
     private int SoLuong;
 
+    public RecordSanPham(SanPham pham, int SoLuong) {
+        this.pham = pham;
+        this.SoLuong = SoLuong;
+    }
+
+    public RecordSanPham() {
+    }
+    
     public SanPham getPham() {
         return pham;
     }

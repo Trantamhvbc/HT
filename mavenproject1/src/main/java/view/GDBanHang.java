@@ -46,17 +46,18 @@ import javax.swing.JFrame;
  *
  * @author Duong
  */
-public class GDQLPhieuThuChi extends javax.swing.JFrame {
+public class GDBanHang extends javax.swing.JFrame {
 
     /**
-     * Creates new form GDQLPhieuThuChi
+     * Creates new form GDBanHang
      */
     private ArrayList<RecordSanPham> listSanPham2 = new ArrayList<>();
     private Kho selectedKho;
     private NhanVien selectNV;
     private ArrayList<RecordSanPham> listSanPhamSelected = new ArrayList<>();
+    private HoaDonBanHang hoadonDonBanHang = null;
     private int tienHang = 0;
-    public GDQLPhieuThuChi() {
+    public GDBanHang() {
         initComponents();
         Kho kho = new Kho();
         kho.setId(1);
@@ -66,6 +67,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         addListenerText((jTextFieldGiamGia));
         addListenerText((jTextFieldTiLeThue));
         jTextFieldSoHD.setText(createMatBienLai());
+        hoadonDonBanHang =  new HoaDonBanHang();
     }
 //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
     //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
@@ -202,7 +204,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
     }
 
     void loadSanPham() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "MÃ£ máº·t hÃ ng", "TÃªn máº·t hÃ ng", "GiÃ¡ bÃ¡n láº»", "Háº¡n sá»­ dá»¥ng", "Ä�VT", "Sá»‘ lÆ°á»£ng"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Mặt Hàng", "Tiền Mặt Hàng", "số lượng", "1", "?", "?"}, 0);
         defaultTableModel.setRowCount(0);
         jTableSanPham.setModel(defaultTableModel);
         jTableSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -230,9 +232,9 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
     }
 
     void loadSanPham(Kho kho) {
-        XuatHangDAO spdao = new XuatHangDAO();
-        listSanPham2 = spdao.loadSanPhamXuatKho(kho);
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "MÃ£ máº·t hÃ ng", "TÃªn máº·t hÃ ng", "GiÃ¡ bÃ¡n láº»", "Háº¡n sá»­ dá»¥ng", "Ä�VT", "Sá»‘ lÆ°á»£ng"}, 0);
+        SPDBDAO spdao = new SPDBDAO();
+        listSanPham2 = spdao.getAllSanPhamTrenCuaHang();
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mặt hàng", "1", "2", "3", "4", "5"}, 0);
         defaultTableModel.setRowCount(0);
         jTableSanPham.setModel(defaultTableModel);
         jTableSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -277,8 +279,9 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         jTableSpDaChon.setSelectionForeground(new Color(204, 255, 255));
         int stt = 0;
         this.tienHang = 0;
-        for (int i = 0; i < listSanPhamSelected.size(); i++) {
-            RecordSanPham recordSanPham = listSanPhamSelected.get(i);
+        
+        for (int i = 0; i < hoadonDonBanHang.getListSanPhamSelected().size(); i++) {
+            RecordSanPham recordSanPham = hoadonDonBanHang.getListSanPhamSelected().get(i);
             tiLeCK = listTiLeCK.get(i);
             SanPham sp = recordSanPham.getPham();
             int soLuong = recordSanPham.getSoLuong();
@@ -387,7 +390,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_checkout_48px_1.png"))); // NOI18N
-        jLabel2.setText("HÃ³a Ä‘Æ¡n bÃ¡n hÃ ng");
+        jLabel2.setText("Hóa đơn bán hàng");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -416,13 +419,13 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "", "MÃ£ hÃ ng", "TÃªn hÃ ng", "GiÃ¡ bÃ¡n láº»", "Ä�VT", "Háº¡n sá»­ dá»¥ng"
+                "", "Mã hàng", "Tên hàng", "Giá bán lẻ", "ĐVT", "Hạn sử dụng"
             }
         ));
         jScrollPane1.setViewportView(jTableSanPham);
 
         jButtonThem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jButtonThem.setText("ThÃªm");
+        jButtonThem.setText("Thêm");
         jButtonThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonThemActionPerformed(evt);
@@ -458,23 +461,23 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel4.setText("Kho");
 
-        jLabel3.setText("Sá»‘ LÆ°á»£ng");
+        jLabel3.setText("Số Lượng");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel6.setText("NgÃ y láº­p");
+        jLabel6.setText("Ngày lập");
 
         jDateChooserNgayLap.setDateFormatString("dd/MM/yyy\n\n");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel5.setText("Sá»‘ HÄ�");
+        jLabel5.setText("Số HĐ");
 
         jTextFieldSoHD.setEditable(false);
         jTextFieldSoHD.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel8.setText("Diá»…n giáº£i");
+        jLabel8.setText("Diễn giải");
 
-        jLabel9.setText("NhÃ¢n viÃªn");
+        jLabel9.setText("Nhân viên");
 
         jTableSpDaChon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -484,7 +487,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "MÃ£ hÃ ng", "TÃªn máº·t hÃ ng", "Sá»‘ lÆ°á»£ng", "Ä�VT", "Ä�Æ¡n giÃ¡", "CK%", "Tiá»�n giáº£m", "ThÃ nh tiá»�n"
+                "Mã hàng", "Tên mặt hàng", "Số lượng", "ĐVT", "Đơn giá", "CK%", "Tiền giảm", "Thành tiền"
             }
         ));
         jScrollPane2.setViewportView(jTableSpDaChon);
@@ -492,7 +495,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         jComboBoxNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel10.setText("Ghi chÃº");
+        jLabel10.setText("Ghi chú");
 
         jTextFieldGhiChu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -501,10 +504,10 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel11.setText("Tiá»�n hÃ ng");
+        jLabel11.setText("Tiền hàng");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel12.setText("Giáº£m giÃ¡");
+        jLabel12.setText("Giảm giá");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel13.setText("%");
@@ -512,27 +515,27 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         jTextFieldGiamGia2.setEditable(false);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel14.setText("Tá»‰ lá»‡ thuáº¿");
+        jLabel14.setText("Tỉ lệ thuế");
 
         jLabel15.setText("%");
 
         jTextFieldTiLeThue2.setEditable(false);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel16.setText("PhÃ­ váº­n chuyá»ƒn");
+        jLabel16.setText("Phí vận chuyển");
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel18.setText("Ä�á»•i tráº£");
+        jLabel18.setText("Đổi trả");
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel19.setText("Tá»•ng cá»™ng");
+        jLabel19.setText("Tổng cộng");
 
         jTextFieldTongCong.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextFieldTongCong.setForeground(new java.awt.Color(255, 51, 51));
 
         jButtonThanhToan.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jButtonThanhToan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_cash_18px.png"))); // NOI18N
-        jButtonThanhToan.setText("Thanh toÃ¡n");
+        jButtonThanhToan.setText("Thanh toán");
         jButtonThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonThanhToanActionPerformed(evt);
@@ -541,7 +544,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
 
         jButtonXoaDong.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jButtonXoaDong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_delete_18px.png"))); // NOI18N
-        jButtonXoaDong.setText("XÃ³a");
+        jButtonXoaDong.setText("Xóa");
         jButtonXoaDong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonXoaDongActionPerformed(evt);
@@ -682,7 +685,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         jPanel5Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField10, jTextFieldGiamGia, jTextFieldGiamGia2, jTextFieldTiLeThue, jTextFieldTiLeThue2, jTextFieldTienHang, jTextFieldTongCong, jTextFieldVanChuyen});
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel7.setText("Chiáº¿t kháº¥u");
+        jLabel7.setText("Chiết khấu");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -731,7 +734,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
                             .addComponent(jComboBoxKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 221, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -748,7 +751,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
             check = false;
             JOptionPane.showMessageDialog(null, "chá»�n dÃ²ng cáº§n xÃ³a", "cáº£nh bÃ¡o chá»�n dÃ²ng xÃ³a", JOptionPane.WARNING_MESSAGE);
         } else {
-            RecordSanPham rsp = listSanPhamSelected.remove(row);
+            RecordSanPham rsp = hoadonDonBanHang.remove(row);
             for (int i = 0; i < listSanPham2.size(); i++) {
                 RecordSanPham rsp2 = listSanPham2.get(i);
                 int sl = rsp2.getSoLuong();
@@ -773,10 +776,10 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         int soLuong = (Integer) jSpinnerSoLuong.getValue();
         if (row == -1) {
             check = false;
-            JOptionPane.showMessageDialog(null, "Chá»�n máº·t hÃ ng báº¡n muá»‘n thÃªm!", "cáº£nh bÃ¡o chá»�n máº·t hÃ ng", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "loi", "cảnh báo mặt hàng", JOptionPane.WARNING_MESSAGE);
         } else if (soLuong > listSanPham2.get(row).getSoLuong()) {
             check = false;
-            JOptionPane.showMessageDialog(null, "Chá»�n sá»‘ lÆ°á»£ng nhá»� hÆ¡n !", "cáº£nh bÃ¡o chá»�n quÃ¡ sá»‘ lÆ°á»£ng sáº£n pháº§m cÃ³", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "2","3", JOptionPane.WARNING_MESSAGE);
         } else {
             if (!jTextFieldCK.getText().equals("")) {
                 tiLeCK = Integer.parseInt(jTextFieldCK.getText());
@@ -789,7 +792,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
             recordSanPham = new RecordSanPham();
             recordSanPham.setPham(sp);
             recordSanPham.setSoLuong(soLuong);
-            listSanPhamSelected.add(recordSanPham);
+            hoadonDonBanHang.add(recordSanPham);
             listTiLeCK.add(tiLeCK);
             loadSanPhamDaChon();
             loadSanPham();
@@ -799,8 +802,8 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonThemActionPerformed
     int tinhSoLuong() {
         int number = 0;
-        for (int i = 0; i < listSanPhamSelected.size(); i++) {
-            number += listSanPhamSelected.get(i).getSoLuong();
+        for (int i = 0; i < hoadonDonBanHang.getListSanPhamSelected().size(); i++) {
+            number += hoadonDonBanHang.getListSanPhamSelected().get(i).getSoLuong();
         }
         return number;
     }
@@ -810,20 +813,14 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
         boolean check = true;
         if (ngayLap.equals("")) {
             check = false;
-            JOptionPane.showMessageDialog(null, "chá»�n ngÃ y láº­p", "cáº£nh bÃ¡o chá»�n ngÃ y láº­p", JOptionPane.WARNING_MESSAGE);
-        } else if (listSanPhamSelected.size() > 0) {
-            ArrayList<HoaDonBanHang> hoaDonBanHangs = new ArrayList<>();
-            for (int i = 0; i < listSanPhamSelected.size(); i++) {
-                RecordSanPham recordSanPham = listSanPhamSelected.get(i);
-                SanPham sp = recordSanPham.getPham();
-                HoaDonBanHang hoaDonBanHang = new HoaDonBanHang();
-                hoaDonBanHang.setNgay(ngayLap);
-                hoaDonBanHang.setNv(selectNV);
-                hoaDonBanHang.setSoLuong(tinhSoLuong());
-                hoaDonBanHang.setSoTien(tienHang);
-                hoaDonBanHang.setSp(sp);
-                hoaDonBanHangs.add(hoaDonBanHang);
-            }
+            JOptionPane.showMessageDialog(null, "??", "cảnh báo ngày nhập", JOptionPane.WARNING_MESSAGE);
+        } else if (hoadonDonBanHang.getListSanPhamSelected().size() > 0) {
+            
+            hoadonDonBanHang.setNgay(ngayLap);
+            hoadonDonBanHang.setNv(selectNV);
+            hoadonDonBanHang.setSoLuong(tinhSoLuong());
+            hoadonDonBanHang.setSoTien(tienHang);
+
             PhieuThuChi phieuThuChi = new PhieuThuChi();
             phieuThuChi.setNgayLap(ngayLap);
             phieuThuChi.setDienGiai(jTextFieldDienGiai.getText());
@@ -832,20 +829,20 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
             phieuThuChi.setNv(selectNV);
             phieuThuChi.setTenDoiTuong("KhÃ¡ch hÃ ng");
             phieuThuChi.setSoPhieu(soPhieu);
-            GDXacNhanBanHang dXacNhanBanHang = new GDXacNhanBanHang(tienHang, hoaDonBanHangs, phieuThuChi);
+            GDXacNhanBanHang dXacNhanBanHang = new GDXacNhanBanHang(tienHang, hoadonDonBanHang, phieuThuChi);
             dXacNhanBanHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             dXacNhanBanHang.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
                     JFrame frame = (JFrame) e.getSource();
                     int result = JOptionPane.showConfirmDialog(
                             frame,
-                            "CÃ³ pháº£i báº¡n muá»‘n Ä‘Ã³ng cá»­a sá»• nÃ y?",
+                            "gggac ",
                             "Exit Application",
                             JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         loadSanPham(selectedKho);
-                        listSanPhamSelected.clear();;
+                        hoadonDonBanHang = new HoaDonBanHang();
                         loadSanPhamDaChon();
                     }
                 }
@@ -873,14 +870,15 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GDQLPhieuThuChi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GDBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GDQLPhieuThuChi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GDBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GDQLPhieuThuChi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GDBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GDQLPhieuThuChi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GDBanHang.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -893,7 +891,7 @@ public class GDQLPhieuThuChi extends javax.swing.JFrame {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                new GDQLPhieuThuChi().setVisible(true);
+                new GDBanHang().setVisible(true);
             }
         });
     }
