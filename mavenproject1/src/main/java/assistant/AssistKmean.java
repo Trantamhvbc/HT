@@ -45,12 +45,8 @@ public class AssistKmean {
     public  HashMap<Pair,Double> getDisimiler(){
         HashMap<Pair,Double> probabilityMH = new HashMap();
         ArrayList<MatHang> listMH = matHangDAO.getAllMatHang();
-        ArrayList<HoaDonBanHang> listHoaDonBanHang = new HoaDonBanHangDAO().getHoaDonBanHangs();
-        for(HoaDonBanHang i : listHoaDonBanHang ){
-            
-        }
-        HashMap<Integer,Integer> countMH;
-        return probabilityMH;
+        ArrayList<HoaDonBanHang> listHoaDonBanHang;
+        listHoaDonBanHang = HoaDonBanHangDAO.getHoaDonBanHangs();
     }
     
 }

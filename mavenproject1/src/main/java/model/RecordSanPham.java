@@ -12,19 +12,7 @@ package model;
 public class RecordSanPham {
     private SanPham pham;
     private int SoLuong;
-    private int chietKhau;
 
-    public RecordSanPham() {
-    }
-
-    public int getChietKhau() {
-        return chietKhau;
-    }
-
-    public void setChietKhau(int chietKhau) {
-        this.chietKhau = chietKhau;
-    }
-    
     public SanPham getPham() {
         return pham;
     }

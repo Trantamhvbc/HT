@@ -9,31 +9,16 @@
  * @author Duong
  */
 package model;
-
-import java.util.ArrayList;
-
 public class HoaDonBanHang {
     private int idHoaDonBanHang;
     private int soLuong;
     private String ngay;
-    private ArrayList<RecordSanPham> listSanPham;
+    private SanPham sp;
     private int soTien;
     private NhanVien nv;
 
     public HoaDonBanHang() {
-        listSanPham = new ArrayList<>();
     }
-    public void  addRecordSanPham(RecordSanPham e){
-        this.listSanPham.add(e);
-    }
-    public ArrayList<RecordSanPham> getListSanPham() {
-        return listSanPham;
-    }
-
-    public void setListSanPham(ArrayList<RecordSanPham> listSanPham) {
-        this.listSanPham = listSanPham;
-    }
-    
 
     public int getIdHoaDonBanHang() {
         return idHoaDonBanHang;
@@ -58,7 +43,15 @@ public class HoaDonBanHang {
     public void setNgay(String ngay) {
         this.ngay = ngay;
     }
-    
+
+    public SanPham getSp() {
+        return sp;
+    }
+
+    public void setSp(SanPham sp) {
+        this.sp = sp;
+    }
+
     public int getSoTien() {
         return soTien;
     }

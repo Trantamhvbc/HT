@@ -9,6 +9,7 @@ import static control.DAO.con;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.*;
 
@@ -95,16 +96,27 @@ public class BienLaiNhapDAO extends DAO {
 
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             con.setAutoCommit(false);
-            stm = con.prepareStatement(sql2);
-            stm.executeUpdate();
+            int maxId;
+            stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+            maxId = stm.executeUpdate();
             con.commit();
+            if (maxId > 0) {
+                ResultSet resultSet = stm.getGeneratedKeys();
+                while (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                }
+            }
             String sql3 = "select max(idBienLaiKho) as idBienLaiKho from [BienLaiKho]";
             stm = con.prepareStatement(sql3);
             rs = stm.executeQuery();
+<<<<<<< HEAD
+
+=======
             int maxId = 0;
             while (rs.next()) {
                 maxId = rs.getInt("idBienLaiKho");
             }// tim max biÃªn lai kho
+>>>>>>> origin/trantam
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
             sql3 = "select max(idPhieuThuChi) as idPhieuThuChi from [CuaHangHoaQua].[dbo].[PhieuThuChi]";
@@ -177,19 +189,20 @@ public class BienLaiNhapDAO extends DAO {
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             con.setAutoCommit(false);
-            stm = con.prepareStatement(sql2);
-            stm.executeUpdate();
+            stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+            int maxId = 0;
+            maxId = stm.executeUpdate();
             con.commit();
+            if (maxId > 0) {
+                ResultSet resultSet = stm.getGeneratedKeys();
+                while (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                }
+            }
+            
             String sql3 = "select idBienLaiKho from [BienLaiKho]";
             stm = con.prepareStatement(sql3);
             rs = stm.executeQuery();
-            int maxId = 0;
-            while (rs.next()) {
-                int tmp = rs.getInt("idBienLaiKho");
-                if (maxId < tmp) {
-                    maxId = tmp;
-                }
-            }
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
             System.out.println("maxID" + (maxId));

@@ -38,12 +38,23 @@ import model.*;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.*;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  *
  * @author Duong
  */
-public class GDNhapHangFrm extends javax.swing.JFrame {
+public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
 
     private NhaCungCap nccSelected;
     private ArrayList<NhaCungCap> listNcc;
@@ -65,6 +76,41 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         addListenerText(jTextFieldDonGia);
         loadThemMatHangDaChon();
         createMatBienLai();
+        loadUpdateDB();
+    }
+
+    @Override
+    public void execute(JobExecutionContext arg0) throws JobExecutionException {
+        loadDanhSachMH();
+    }
+
+    void loadUpdateDB() {
+        Thread run;
+        Runnable task = null;
+        run = new Thread(task);
+        task = new Runnable() {
+            boolean exit = false;
+
+            @Override
+            public void run() {
+                while (!exit) {
+                    loadNCC();
+                    loadNV();
+                    loadDanhSachMH();
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+            public void stop() {
+                exit = true;
+            }
+        };
+        run = new Thread(task);
+        run.start();
     }
 
     int countDigit(int number) {
@@ -97,7 +143,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         return s;
     }
 
-    //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
+    //thêm sự kiện ô nhập đơn giá định dạng money
     void addListenerText(JTextField field) {
         field.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -156,10 +202,10 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             }
         });
     }
-    // táº£i dá»¯ liá»‡u tá»« danh sÃ¡ch máº·t hÃ ng tÃ¬m kiáº¿m vÃ o báº£ng máº·t hÃ ng
+    // tải dữ liệu từ danh sách mặt hàng tìm kiếm vào bảng mặt hàng
 
     void loadDanhSachMH(ArrayList<MatHang> listMatHang) {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "MÃ£ máº·t hÃ ng", "TÃªn máº·t hÃ ng", "Ä�VT", "Sá»‘ lÆ°á»£ng"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "Tên mặt hàng", "ĐVT", "Số lượng"}, 0);
         defaultTableModel.setRowCount(0);
         jTableDanhSachMH.setModel(defaultTableModel);
         jTableDanhSachMH.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -185,10 +231,11 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         defaultTableModel.fireTableDataChanged();
     }
 
-    // táº£i dá»¯ liá»‡u tá»« cÆ¡ sá»Ÿ dá»¯ liá»‡u vÃ o báº£ng máº·t hÃ ng
+    // tải dữ liệu từ cơ sở dữ liệu vào bảng mặt hàng
     void loadDanhSachMH() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "MÃ£ máº·t hÃ ng", "TÃªn máº·t hÃ ng", "Ä�VT", "MÃ´ táº£"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "Tên mặt hàng", "ĐVT", "Mô tả"}, 0);
         defaultTableModel.setRowCount(0);
+        System.out.println("loadDanhSachMH");
         listMatHang = new MatHangDAO().getAllMatHang();
         jTableDanhSachMH.setModel(defaultTableModel);
         jTableDanhSachMH.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -214,7 +261,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         defaultTableModel.fireTableDataChanged();
     }
 
-    // táº£i dá»¯ liá»‡u nhÃ¢n viÃªn kho tá»« cÆ¡ sá»Ÿ dá»¯ liá»‡u
+    // tải dữ liệu nhân viên kho từ cơ sở dữ liệu
     void loadNV() {
         jComboBoxNhanVien.removeAllItems();
         NhanVienDAO nhanVienDAO = new NhanVienDAO();
@@ -230,22 +277,22 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             public void itemStateChanged(ItemEvent e) {
                 JComboBox comboBoxTest = (JComboBox) e.getSource();
                 int stt = comboBoxTest.getSelectedIndex();
+                if(stt!=-1)
                 nvSelected = listNV.get(stt);
             }
         });
     }
 
-    // táº£i dá»¯ liá»‡u kho tá»« csdl
+    // tải dữ liệu kho từ csdl
     void loadKho() {
         jComboBoxKho.removeAllItems();
         KhoDAO khoDAO = new KhoDAO();
         this.listKho = khoDAO.getAllKho();
-
         khoSelected = listKho.get(0);
 
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listKho.size(); i++) {
-            model.addElement("Kho á»Ÿ " + listKho.get(i).getDiaChi());
+            model.addElement("Kho ở " + listKho.get(i).getDiaChi());
         }
 
         jComboBoxKho.setModel(model);
@@ -259,12 +306,11 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         });
     }
 
-    // táº£i danh sÃ¡ch nhÃ  cung cáº¥p tá»« csdl
+    // tải danh sách nhà cung cấp từ csdl
     void loadNCC() {
         jComboBoxNcc.removeAllItems();
         NhaCungCapDAO nccdao = new NhaCungCapDAO();
         this.listNcc = nccdao.getAllNhaCungCap();
-        if(listNcc.size()>0)
         nccSelected = listNcc.get(0);
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listNcc.size(); i++) {
@@ -276,6 +322,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             public void itemStateChanged(ItemEvent e) {
                 JComboBox comboBoxTest = (JComboBox) e.getSource();
                 int stt = comboBoxTest.getSelectedIndex();
+                if(stt!=-1)
                 nccSelected = listNcc.get(stt);
             }
         });
@@ -374,21 +421,21 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
         jDateChooserNgayLap.setDateFormatString("dd/MM/yyyy");
 
-        jLabel2.setText("NhÃ  cung cáº¥p");
+        jLabel2.setText("Nhà cung cấp");
 
         jTextFieldMaBienLai.setEditable(false);
 
-        jComboBoxKho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kho HÃ  Ná»™i", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxKho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kho Hà Nội", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel6.setText("NhÃ¢n viÃªn nháº­p");
+        jLabel6.setText("Nhân viên nhập");
 
-        jLabel1.setText("NgÃ y");
+        jLabel1.setText("Ngày");
 
-        jComboBoxNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NV Nguyá»…n Thá»‹ Loan", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NV Nguyễn Thị Loan", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel5.setText("Sá»‘ phiáº¿u");
+        jLabel5.setText("Số phiếu");
 
-        jComboBoxNcc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chá»‹ Yáº¿n", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxNcc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chị Yến", "Item 2", "Item 3", "Item 4" }));
         jComboBoxNcc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxNccItemStateChanged(evt);
@@ -400,11 +447,11 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Kho nháº­p");
+        jLabel3.setText("Kho nhập");
 
-        jLabel4.setText("Diá»…n giáº£i");
+        jLabel4.setText("Diễn giải");
 
-        jLabel7.setText("Ghi chÃº");
+        jLabel7.setText("Ghi chú");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -470,24 +517,24 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxKho, jComboBoxNcc, jComboBoxNhanVien, jDateChooserNgayLap, jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jTextFieldGhiChu, jTextFieldLyDo, jTextFieldMaBienLai});
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tá»•ng cá»™ng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tổng cộng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jLabel11.setText("Tiá»�n HÃ ng");
+        jLabel11.setText("Tiền Hàng");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jLabel13.setText("Tá»‰ lá»‡ thuáº¿");
+        jLabel13.setText("Tỉ lệ thuế");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jLabel14.setText("PhÃ­ váº­n chuyá»ƒn");
+        jLabel14.setText("Phí vận chuyển");
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jLabel15.setText("Tá»•ng cá»™ng");
+        jLabel15.setText("Tổng cộng");
 
         jTextField12.setEditable(false);
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel17.setText("Tá»‰ lá»‡ lÃ£i");
+        jLabel17.setText("Tỉ lệ lãi");
 
         jTextField20.setEnabled(false);
 
@@ -567,7 +614,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
         jButtonTimKiem.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jButtonTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/magnifying-glass16x16.png"))); // NOI18N
-        jButtonTimKiem.setText("TÃ¬m kiáº¿m");
+        jButtonTimKiem.setText("Tìm kiếm");
         jButtonTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTimKiemActionPerformed(evt);
@@ -576,7 +623,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
         jButtonTaoMoi.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jButtonTaoMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/themmathang24x24.png"))); // NOI18N
-        jButtonTaoMoi.setText("Táº¡o má»›i");
+        jButtonTaoMoi.setText("Tạo mới");
         jButtonTaoMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTaoMoiActionPerformed(evt);
@@ -592,7 +639,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "", "MÃ£ hÃ ng", "TÃªn hÃ ng", "Ä�VT", "MÃ´ táº£"
+                "", "Mã hàng", "Tên hàng", "ĐVT", "Mô tả"
             }
         ) {
             Class[] types = new Class [] {
@@ -634,7 +681,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "", "MÃ£ hÃ ng", "TÃªn hÃ ng", "Ä�VT", "GiÃ¡", "Sá»‘ lÆ°á»£ng"
+                "", "Mã hàng", "Tên hàng", "ĐVT", "Giá", "Số lượng"
             }
         ) {
             Class[] types = new Class [] {
@@ -665,11 +712,11 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             jTable3.getColumnModel().getColumn(5).setResizable(false);
         }
 
-        jLabel9.setText("Sá»‘ lÆ°á»£ng");
+        jLabel9.setText("Số lượng");
 
-        jLabel10.setText("Ä�Æ¡n giÃ¡:");
+        jLabel10.setText("Đơn giá:");
 
-        JButtonThem.setText("ThÃªm");
+        JButtonThem.setText("Thêm");
         JButtonThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JButtonThemActionPerformed(evt);
@@ -677,7 +724,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         });
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel25.setText("Háº¡n sá»­ dá»¥ng");
+        jLabel25.setText("Hạn sử dụng");
 
         jDateChooserHanSd.setDateFormatString("dd/MM/yyyy\n");
 
@@ -747,7 +794,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/import 24x24.png"))); // NOI18N
-        jLabel12.setText("Phiáº¿u nháº­p kho");
+        jLabel12.setText("Phiếu nhập kho");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -777,7 +824,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         );
 
         jButtonXoaDong.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jButtonXoaDong.setText("XÃ³a dÃ²ng");
+        jButtonXoaDong.setText("Xóa dòng");
         jButtonXoaDong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonXoaDongActionPerformed(evt);
@@ -795,7 +842,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "", "MÃ£ hÃ ng", "TÃªn máº·t hÃ ng", "Háº¡n sá»­ dá»¥ng", "Ä�VT", "Sá»‘ lÆ°á»£ng", "Ä�Æ¡n giÃ¡", "ThÃ nh tiá»�n"
+                "", "Mã hàng", "Tên mặt hàng", "Hạn sử dụng", "ĐVT", "Số lượng", "Đơn giá", "Thành tiền"
             }
         ) {
             Class[] types = new Class [] {
@@ -829,7 +876,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         }
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel18.setText("Tá»”NG");
+        jLabel18.setText("TỔNG");
 
         jTextField14.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField14.setText("80");
@@ -853,29 +900,29 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jTextField17.setEnabled(false);
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel19.setText("Sá»‘ lÆ°á»£ng");
+        jLabel19.setText("Số lượng");
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel20.setText("Ä�Æ¡n giÃ¡");
+        jLabel20.setText("Đơn giá");
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel21.setText("Tá»‰ lá»‡ thuáº¿");
+        jLabel21.setText("Tỉ lệ thuế");
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel22.setText("ThÃ nh tiá»�n");
+        jLabel22.setText("Thành tiền");
 
-        jButton7.setText("In láº¡i phiáº¿u");
+        jButton7.setText("In lại phiếu");
 
-        jButtonThanhToan.setText("Thanh toÃ¡n");
+        jButtonThanhToan.setText("Thanh toán");
         jButtonThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonThanhToanActionPerformed(evt);
             }
         });
 
-        jButton8.setText("ThoÃ¡t");
+        jButton8.setText("Thoát");
 
-        jLabel8.setText("Tá»‰ lá»‡ lÃ£i");
+        jLabel8.setText("Tỉ lệ lãi");
 
         jTextField18.setEnabled(false);
         jTextField18.addActionListener(new java.awt.event.ActionListener() {
@@ -1030,7 +1077,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     private void jComboBoxNccItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxNccItemStateChanged
 
     }//GEN-LAST:event_jComboBoxNccItemStateChanged
-    // sá»± kiá»‡n nÃºt táº¡o má»›i
+    // sự kiện nút tạo mới
     private void jButtonTaoMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTaoMoiActionPerformed
         GDNhapMatHangFrm dNhapMatHangFrm = new GDNhapMatHangFrm();
         dNhapMatHangFrm.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -1046,7 +1093,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
                 if (result == JOptionPane.YES_OPTION) {
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    loadDanhSachMH();// táº£i láº¡i danh sÃ¡ch máº·t hÃ ng
+                    loadDanhSachMH();// tải lại danh sách mặt hàng
                 }
             }
         });
@@ -1056,7 +1103,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonTaoMoiActionPerformed
 
     void loadThemMatHangDaChon() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "MÃ£ máº·t hÃ ng", "TÃªn máº·t hÃ ng", "Háº¡n sá»­ dá»¥ng", "Ä�VT", "Sá»‘ lÆ°á»£ng", "Ä�Æ¡n giÃ¡", "ThÃ nh tiá»�n"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "Tên mặt hàng", "Hạn sử dụng", "ĐVT", "Số lượng", "Đơn giá", "Thành tiền"}, 0);
         defaultTableModel.setRowCount(0);
         jTableMatHangThem.setModel(defaultTableModel);
         jTableMatHangThem.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -1089,7 +1136,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         defaultTableModel.fireTableDataChanged();
 
     }
-// xá»­ lÃ½ sá»± kiáº¿n áº¥n nÃºt tÃ¬m máº·t hÃ ng
+// xử lý sự kiến ấn nút tìm mặt hàng
     private void jButtonTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTimKiemActionPerformed
         ArrayList<MatHang> listMatHangTmp = new ArrayList<>();
         String txtSearch = jTextFieldTimKiem.getText();
@@ -1110,7 +1157,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonTimKiemActionPerformed
     public boolean compareSanPham(SanPham sp1, SanPham sp2) {
-        if (sp1.getIdMatHang()==sp2.getIdMatHang()) {
+        if (sp1.getIdMatHang() == sp2.getIdMatHang()) {
             return true;
         }
         return false;
@@ -1129,11 +1176,11 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         }
         if (row == -1) {
             check = false;
-            JOptionPane.showMessageDialog(null, "Chá»�n máº·t hÃ ng báº¡n muá»‘n thÃªm!", "cáº£nh bÃ¡o chá»�n máº·t hÃ ng", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Chọn mặt hàng bạn muốn thêm!", "cảnh báo chọn mặt hàng", JOptionPane.WARNING_MESSAGE);
 
         } else if (donGia.equals("")) {
             check = false;
-            JOptionPane.showMessageDialog(jTextFieldDonGia, "Ä�iá»�n giÃ¡ máº·t hÃ ng báº¡n Ä‘Ã£ chá»�n!", "cáº£nh bÃ¡o Ä‘iá»�n giÃ¡", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(jTextFieldDonGia, "Điền giá mặt hàng bạn đã chọn!", "cảnh báo điền giá", JOptionPane.WARNING_MESSAGE);
             jTextFieldDonGia.requestFocus();
         }
         MatHang matHangThem;
@@ -1151,7 +1198,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         if (check = true) {
             boolean check2 = false;
             for (int i = 0; i < listMatHangDaChon.size(); i++) {
-                RecordSanPham recordSanPham =listMatHangDaChon.get(i) ;
+                RecordSanPham recordSanPham = listMatHangDaChon.get(i);
                 SanPham pham = recordSanPham.getPham();
                 int soLuong2 = recordSanPham.getSoLuong();
                 if (compareSanPham(pham, sp)) {
@@ -1179,7 +1226,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         String donGia = jTableMatHangThem.getValueAt(row, 6).toString();
         for (int i = 0; i < listMatHangDaChon.size(); i++) {
             RecordSanPham recordSanPham = new RecordSanPham();
-            recordSanPham=listMatHangDaChon.get(i);
+            recordSanPham = listMatHangDaChon.get(i);
             SanPham pham = recordSanPham.getPham();
             int soluong2 = recordSanPham.getSoLuong();
             String maMH2 = pham.getMaMatHang();
@@ -1188,7 +1235,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             String dvt2 = pham.getDonViTinh();
             int gia2 = pham.getGia();
             if (ma.equals(maMH2) && tenMH.equals(tenMH2) && hsd.equals(hsd2) && soLuong == soluong2 && row != -1) {
-                 listMatHangDaChon.remove(i);
+                listMatHangDaChon.remove(i);
                 break;
             }
 
@@ -1211,7 +1258,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
                 int result = JOptionPane.showConfirmDialog(
                         frame,
-                        "CÃ³ pháº£i báº¡n muá»‘n Ä‘Ã³ng cá»­a sá»• nÃ y?",
+                        "Có phải bạn muốn đóng cửa sổ này?",
                         "Exit Application",
                         JOptionPane.YES_NO_OPTION);
 

@@ -122,6 +122,33 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
     }
 
     void loadUpdateDB() {
+<<<<<<< HEAD
+        Thread run;
+        Runnable task = null;
+        run = new Thread(task);
+        task = new Runnable() {
+            boolean exit = false;
+
+            @Override
+            public void run() {
+                while (!exit) {
+                    loadNV();
+                    loadDanhSachMH();
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+            public void stop() {
+                exit = true;
+            }
+        };
+        run = new Thread(task);
+        run.start();
+=======
         try {
             SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
 
@@ -145,6 +172,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
             sched.scheduleJob(job, trigger);
         } catch (Exception e) {
         }
+>>>>>>> origin/trantam
     }
 
     int countDigit(int number) {
@@ -270,7 +298,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
 
     // tải dữ liệu từ cơ sở dữ liệu vào bảng mặt hàng
     void loadDanhSachMH() {
-        System.out.println("loading...");
+        System.out.println("loadDanhSachMH");
         XuatHangDAO aO = new XuatHangDAO();
         listMatHang = aO.loadMatHangTrongKhoTheoKho(khoSelected);
         DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Sản Phẩm", "Mã mặt hàng", "Tên mặt hàng", "ĐVT", "Số lượng", "Giá"}, 0);
@@ -311,7 +339,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
         cuaHangSelected = listCuaHang.get(0);
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listCuaHang.size(); i++) {
-            model.addElement(listCuaHang.get(i).getTenCuaHang() + listCuaHang.get(i).getId());
+            model.addElement(listCuaHang.get(i).getTenCuaHang());
         }
         jComboBoxCuaHang.setModel(model);
         jComboBoxCuaHang.addItemListener(new ItemListener() {
@@ -328,8 +356,9 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
     void loadNV() {
         jComboBoxNhanVien.removeAllItems();
         NhanVienDAO nhanVienDAO = new NhanVienDAO();
-        this.listNV = nhanVienDAO.getAllNVKho();
+        listNV = nhanVienDAO.getAllNVKho();
         nvSelected = listNV.get(0);
+        System.out.println(nvSelected.getHoTen());
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listNV.size(); i++) {
             model.addElement(listNV.get(i).getHoTen());
@@ -340,6 +369,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
             public void itemStateChanged(ItemEvent e) {
                 JComboBox comboBoxTest = (JComboBox) e.getSource();
                 int stt = comboBoxTest.getSelectedIndex();
+                if(stt!=-1)
                 nvSelected = listNV.get(stt);
             }
         });
