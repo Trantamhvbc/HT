@@ -109,14 +109,6 @@ public class BienLaiNhapDAO extends DAO {
             String sql3 = "select max(idBienLaiKho) as idBienLaiKho from [BienLaiKho]";
             stm = con.prepareStatement(sql3);
             rs = stm.executeQuery();
-<<<<<<< HEAD
-
-=======
-            int maxId = 0;
-            while (rs.next()) {
-                maxId = rs.getInt("idBienLaiKho");
-            }// tim max biÃªn lai kho
->>>>>>> origin/trantam
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
             sql3 = "select max(idPhieuThuChi) as idPhieuThuChi from [CuaHangHoaQua].[dbo].[PhieuThuChi]";

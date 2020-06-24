@@ -122,7 +122,6 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
     }
 
     void loadUpdateDB() {
-<<<<<<< HEAD
         Thread run;
         Runnable task = null;
         run = new Thread(task);
@@ -148,31 +147,6 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
         };
         run = new Thread(task);
         run.start();
-=======
-        try {
-            SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
-
-            Scheduler sched = StdSchedulerFactory.getDefaultScheduler();
-
-            sched.start();
-            JobDetail job = newJob(GDXuatHangFrm.class)
-                    .withIdentity("job1", "group1") // name "myJob", group "group1"
-                    .build();
-            // Trigger the job to run now, and then every 40 seconds
-            Trigger trigger = newTrigger()
-                    .withIdentity("trigger1", "group1")
-                    .startNow()
-                    .withSchedule(simpleSchedule()
-                            .withIntervalInSeconds(10)
-                            .withIntervalInSeconds(1)
-                            .repeatForever())
-                    .build();
-
-            // Tell quartz to schedule the job using our trigger
-            sched.scheduleJob(job, trigger);
-        } catch (Exception e) {
-        }
->>>>>>> origin/trantam
     }
 
     int countDigit(int number) {

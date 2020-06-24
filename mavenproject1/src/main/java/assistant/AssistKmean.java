@@ -46,7 +46,8 @@ public class AssistKmean {
         HashMap<Pair,Double> probabilityMH = new HashMap();
         ArrayList<MatHang> listMH = matHangDAO.getAllMatHang();
         ArrayList<HoaDonBanHang> listHoaDonBanHang;
-        listHoaDonBanHang = HoaDonBanHangDAO.getHoaDonBanHangs();
+        listHoaDonBanHang =new  HoaDonBanHangDAO().getHoaDonBanHangs();
+        return probabilityMH;
     }
     
 }
