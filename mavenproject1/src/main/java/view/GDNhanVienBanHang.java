@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.Image;
+import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import model.NhanVien;
@@ -26,12 +27,24 @@ public class GDNhanVienBanHang extends javax.swing.JFrame {
         initComponents();
         jLabel7.setIcon(resizeImageIcon(jLabel7, ".\\src\\main\\resources\\imagedangnhap\\vegetable.png"));
     }
-    
+    public void dangXuat(){
+        GDDangXuatNhanVienBanHang chuyen = new GDDangXuatNhanVienBanHang(this);
+        chuyen.setVisible(true);
+        this.dispose();
+    }
+//    back.dangXuat();
+//                   dispose_this();
     public GDNhanVienBanHang(NhanVien e) {
         initComponents();
         jLabel7.setIcon(resizeImageIcon(jLabel7, ".\\src\\main\\resources\\imagedangnhap\\vegetable.png"));
         this.nhanVien = e;
         loadNhanVien();
+    }
+     @Override
+    protected void processWindowEvent(final WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            dangXuat();
+        }
     }
     private void loadNhanVien(){
         jLabel2.setText(this.nhanVien.getHoTen());
@@ -216,9 +229,7 @@ public class GDNhanVienBanHang extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        GDDangXuatNhanVienBanHang chuyen = new GDDangXuatNhanVienBanHang(this);
-        chuyen.setVisible(true);
-        this.dispose();
+        dangXuat();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

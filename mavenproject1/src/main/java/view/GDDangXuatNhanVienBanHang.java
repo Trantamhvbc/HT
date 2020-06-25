@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.Image;
+import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -22,6 +23,10 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
     public GDDangXuatNhanVienBanHang() {
         initComponents();
         jLabel7.setIcon(resizeImageIcon(jLabel7, ".\\src\\main\\resources\\imagedangnhap\\vegetable.png"));
+    }
+     protected void processWindowEvent(final WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+        }
     }
     public GDDangXuatNhanVienBanHang(GDNhanVienBanHang gDNhanVienBanHang) {
         initComponents();

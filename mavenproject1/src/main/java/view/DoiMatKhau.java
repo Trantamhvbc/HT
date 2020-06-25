@@ -6,6 +6,7 @@
 package view;
 
 import java.awt.Frame;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 /**
@@ -17,12 +18,18 @@ public class DoiMatKhau extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    Frame frameBack;
+    GDNhanVienBanHang frameBack;
 
-    public DoiMatKhau(Frame e ) {
+    public DoiMatKhau(GDNhanVienBanHang e ) {
         initComponents();
         this.frameBack = e;
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    protected void processWindowEvent(final WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            frameBack.dangXuat();
+            this.dispose();
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.

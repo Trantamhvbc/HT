@@ -89,6 +89,14 @@ public class GDBanHang extends javax.swing.JFrame {
         loadSanPhamDaChon();
         loadTongTien();
         loadChoseDay();
+        
+        }
+    @Override
+    protected void processWindowEvent(final WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            back.dangXuat();
+            this.dispose();
+        }
     }
 //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
     //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
