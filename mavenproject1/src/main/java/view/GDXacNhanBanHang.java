@@ -32,11 +32,12 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
     private HoaDonBanHang HDBH;
     private PhieuThuChi ptc;
     private int tienHang;
-
-    public GDXacNhanBanHang(int tienHang, HoaDonBanHang hdbh, PhieuThuChi phieuThu) {
+    private GDBanHang h;
+    public GDXacNhanBanHang(int tienHang, HoaDonBanHang hdbh, PhieuThuChi phieuThu,GDBanHang h) {
         initComponents();
         this.ptc = phieuThu;
         this.HDBH = hdbh;
+        this.h = h;
         this.tienHang = tienHang;
         jTextFieldTongTien.setText("" + tienHang);
         addListenerText(jTextFieldKhachDua);
@@ -226,7 +227,9 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
         hoaDonBanHangDAO.themHoaDonBanHang(HDBH);
         ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
         JOptionPane.showMessageDialog(null, "Đã thanh toán thành công cho khách hàng", "thanh toán thành công", JOptionPane.INFORMATION_MESSAGE, icon);
-
+        this.h.addTongTien(tienHang);
+        
+        
     }//GEN-LAST:event_jButtonDongBillVaInActionPerformed
 
     /**

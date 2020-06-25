@@ -5,11 +5,13 @@
  */
 package view;
 
+import control.NhanVienDAO;
 import java.awt.Frame;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import model.NhanVien;
 
 /**
  *
@@ -24,7 +26,7 @@ public class DangNhap extends javax.swing.JFrame {
         initComponents();
         jLabel5.setIcon(resizeImageIcon(jLabel5, ".\\src\\main\\resources\\imagedangnhap\\vegetable.png"));
     }
-        private ImageIcon resizeImageIcon(JLabel laybel, String path){
+    private ImageIcon resizeImageIcon(JLabel laybel, String path){
         ImageIcon myIm = new ImageIcon(path);
         Image convert = myIm.getImage().getScaledInstance(laybel.getWidth(), laybel.getHeight(), Image.SCALE_SMOOTH);
         return new ImageIcon(convert);
@@ -186,13 +188,19 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-
-  
-
-        if( true){
-           GDBanHang chuyen =  new GDBanHang();
-           chuyen.setVisible(true);
-           this.dispose();
+        String username = jTextField1.getText();
+        String password = jPasswordField1.getText();
+        NhanVien e =  new NhanVien();
+        e.setUserName(username);
+        e.setPassword(password);
+        NhanVien out = new NhanVienDAO().getNhanVienByAcount(e);
+        System.out.println(out.getHoTen());
+        if( out.getUserName().equals(e.getUserName()) && out.getPassword().equals(e.getPassword())){
+            if(out.getVaiTro().equals("Bán hàng")){
+                GDNhanVienBanHang chuyen =  new GDNhanVienBanHang(out);
+                chuyen.setVisible(true);
+                this.dispose();
+            }
         }
         else{
             JOptionPane.showMessageDialog( new Frame(), "Tài Khoản Hoặc Mật Khẩu Không Chính Xác");
