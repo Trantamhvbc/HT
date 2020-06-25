@@ -5,10 +5,20 @@
  */
 package view;
 
+import control.NhanVienDAO;
+import java.awt.Frame;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import model.NhanVien;
 
 /**
  *
@@ -20,24 +30,29 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
      * Creates new form GDDangXuatNhanVienBanHang
      */
     private GDNhanVienBanHang gDNhanVienBanHang;
+    
     public GDDangXuatNhanVienBanHang() {
         initComponents();
         jLabel7.setIcon(resizeImageIcon(jLabel7, ".\\src\\main\\resources\\imagedangnhap\\vegetable.png"));
     }
-     protected void processWindowEvent(final WindowEvent e) {
+    protected void processWindowEvent(final WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
         }
     }
     public GDDangXuatNhanVienBanHang(GDNhanVienBanHang gDNhanVienBanHang) {
         initComponents();
         this.gDNhanVienBanHang = gDNhanVienBanHang;
+        jLabel5.setText( this.gDNhanVienBanHang.getTongTien() + "");
+        jLabel2.setText(this.gDNhanVienBanHang.getNhanVien().getHoTen());
         jLabel7.setIcon(resizeImageIcon(jLabel7, ".\\src\\main\\resources\\imagedangnhap\\vegetable.png"));
+        
     }
     private ImageIcon resizeImageIcon(JLabel laybel, String path){
         ImageIcon myIm = new ImageIcon(path);
         Image convert = myIm.getImage().getScaledInstance(laybel.getWidth(), laybel.getHeight(), Image.SCALE_SMOOTH);
         return new ImageIcon(convert);
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,8 +80,8 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jTextField2 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jPasswordField2 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -119,6 +134,11 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(51, 51, 255));
         jButton2.setText("Quản Lí Xác Nhận");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel8.setText("Nhập Lại Mật Khẩu");
@@ -135,14 +155,8 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel11.setText("Tổng Tiền Thu");
 
-        jPasswordField1.setText("jPasswordField1");
-
-        jTextField2.setText(" ");
-
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel12.setText("Nhập Lại Mật Khẩu");
-
-        jTextField3.setText(" ");
+        jLabel12.setText("Mật Khẩu");
 
         jButton1.setBackground(new java.awt.Color(51, 51, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -171,12 +185,10 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField1))))
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1)
+                                    .addComponent(jPasswordField2))
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -188,9 +200,7 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(29, 29, 29)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -238,7 +248,7 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,6 +279,49 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int tienQLNhan = 0;
+        try{
+            tienQLNhan = Integer.parseInt(jTextField1.getText() );
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog( new Frame(), "Nhập sai định dạng số ở chỗ nhập tiền");
+        }
+        if( this.gDNhanVienBanHang.getTongTien() != tienQLNhan ){
+            JOptionPane.showMessageDialog( new Frame(), "Tiền Quản Lí Đã Nhận Khác Tiền Mà Nhân Viên Bán Được");
+        }
+        else{
+            NhanVien nhanhVienBanHang = this.gDNhanVienBanHang.getNhanVien();
+            if(nhanhVienBanHang.getPassword().equals(jPasswordField1.getText())){
+                String user = jTextField2.getText();
+                String password = jPasswordField2.getText();
+                if(user == null || password == null || user.equals("") || password.equals("")){
+                    JOptionPane.showMessageDialog( new Frame(), "Vui Lòng Quản Lí Cửa Hàng Nhập Tài Khoản Và Mật Khẩu Để Xác Thực Đã Nhận Đủ Tiền Bán hàng từ nhân Viên");
+                }
+                else{
+                    NhanVien nhanVienQuanLi = new NhanVien();
+                    nhanVienQuanLi.setUserName(user);
+                    nhanVienQuanLi.setPassword(password);
+                    NhanVien outNhanVienQL = new NhanVienDAO().getNhanVienByAcount(nhanVienQuanLi);
+                    if( outNhanVienQL.getUserName().equals(nhanVienQuanLi.getUserName()) && outNhanVienQL.getPassword().equals(nhanVienQuanLi.getPassword())){
+                        if(outNhanVienQL.getVaiTro().equals("Quản lí cửa hàng")){
+                          ExitSystem exitsystem =   new ExitSystem(outNhanVienQL);
+                          exitsystem.setVisible(true);
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog( new Frame(), "Tài Khoản Hoặc Mật Khẩu Của Quản Lí Cưa Hàng Không Chính Xác");
+                    }
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog( new Frame(), "Mật Khẩu Của Nhân Viên Bán Hàng Không Chính Xác");
+            }
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,8 +345,8 @@ public class GDDangXuatNhanVienBanHang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

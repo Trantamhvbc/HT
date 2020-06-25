@@ -32,6 +32,15 @@ public class GDNhanVienBanHang extends javax.swing.JFrame {
         chuyen.setVisible(true);
         this.dispose();
     }
+
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+
+    public int getTongTien() {
+        return tongTien;
+    }
+    
 //    back.dangXuat();
 //                   dispose_this();
     public GDNhanVienBanHang(NhanVien e) {
