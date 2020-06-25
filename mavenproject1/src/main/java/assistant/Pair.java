@@ -33,5 +33,30 @@ public class Pair {
     public void setIdY(int idY) {
         this.idY = idY;
     }
+    @Override
+    public int hashCode() {
+            final int prime = 9997;
+            int result = 1;
+            result = this.idX * prime + this.idY;
+            return result;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+                return true;
+        if (obj == null)
+                return false;
+        if (getClass() != obj.getClass())
+                return false;
+        Pair other = (Pair) obj;
+        if (this.idX != other.idX)
+                return false;
+        if (this.idY != other.idY)
+                return false;
+        return true;
+    }
+    public String toString(){
+        return this.idX + " " + this.idY;
+    }
     
 }

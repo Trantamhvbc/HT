@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.MatHang;
 
 /**
@@ -20,6 +22,29 @@ public class MatHangDAO extends DAO {
 
     public MatHangDAO() {
         super();
+    }
+    public MatHang getMatHang(int idMatHang){
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT * FROM [CuaHangHoaQua2].dbo.MatHang WHERE idMatHang = '"+idMatHang+"'";
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            MatHang res = new MatHang();
+            while(rs.next()){
+                res.setIdMatHang(idMatHang);
+                res.setMaMatHang(rs.getString("maMatHang"));
+                res.setDonViTinh(rs.getString("donVi"));
+                res.setMoTa(rs.getString("moTa"));
+                res.setTenMatHang(rs.getString("tenMatHang"));
+                return res;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MatHangDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        return new MatHang();
+        
     }
     public ArrayList<MatHang> getAllMatHang() {
         System.out.println("dang get All Mat Hang");
