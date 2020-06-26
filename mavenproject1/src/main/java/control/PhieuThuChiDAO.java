@@ -185,11 +185,8 @@ public class PhieuThuChiDAO extends DAO {
                 + ",idNhanVien,soTien,chuyenKhoan)"
                 + " values(" + loaiPhieu + soPhieu + ngayLap + tenDoiTuong + lyDo + dienGiai + idNhanVien + soTien + chuyenKhoan + ")";
         try {
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
-            stm.close();
         } catch (Exception e) {
             e.printStackTrace();
             try {

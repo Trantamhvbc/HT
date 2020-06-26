@@ -66,11 +66,8 @@ public class SanPhamDAO extends DAO{
         String sql = "insert into [SanPham] (gia,hanSuDung,idMatHang,idBienLaiKho)"
                 + " values(" + gia + hanSd + idMatHang + idBienLaiKho + ")";
         try {
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
-            stm.close();
         } catch (Exception e) {
             e.printStackTrace();
             try {

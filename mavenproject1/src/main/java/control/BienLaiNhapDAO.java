@@ -54,13 +54,11 @@ public class BienLaiNhapDAO extends DAO {
                 bienLaiNhap.setSoLuong(rs.getInt(10));
                 listBienLaiNhap.add(bienLaiNhap);
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -95,7 +93,6 @@ public class BienLaiNhapDAO extends DAO {
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
 
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
-            con.setAutoCommit(false);
             int maxId;
             stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
             maxId = stm.executeUpdate();
@@ -129,8 +126,6 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,14 +138,6 @@ public class BienLaiNhapDAO extends DAO {
                 ex2.printStackTrace();
             }
             return false;
-        } finally {
-            try {
-                stm.close();
-                con.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
         }
         return true;
     }
@@ -178,7 +165,6 @@ public class BienLaiNhapDAO extends DAO {
         try {
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
             int maxId = 0;
             maxId = stm.executeUpdate();
@@ -205,7 +191,6 @@ public class BienLaiNhapDAO extends DAO {
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -221,7 +206,6 @@ public class BienLaiNhapDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();
@@ -249,13 +233,10 @@ public class BienLaiNhapDAO extends DAO {
         String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                 + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
         try {
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();
-            con.commit();
-            stm.close();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -270,7 +251,6 @@ public class BienLaiNhapDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();
