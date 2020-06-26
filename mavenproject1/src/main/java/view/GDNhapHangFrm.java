@@ -76,7 +76,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         addListenerText(jTextFieldDonGia);
         loadThemMatHangDaChon();
         createMatBienLai();
-        loadUpdateDB();
+        //loadUpdateDB();
     }
     @Override
     public void execute(JobExecutionContext arg0) throws JobExecutionException {

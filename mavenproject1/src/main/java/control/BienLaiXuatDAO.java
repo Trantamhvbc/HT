@@ -95,7 +95,7 @@ public class BienLaiXuatDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
+                //con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();

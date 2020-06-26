@@ -54,13 +54,12 @@ public class BienLaiNhapDAO extends DAO {
                 bienLaiNhap.setSoLuong(rs.getInt(10));
                 listBienLaiNhap.add(bienLaiNhap);
             }
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
+                //con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -130,7 +129,7 @@ public class BienLaiNhapDAO extends DAO {
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
-            con.close();
+           // con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,7 +204,7 @@ public class BienLaiNhapDAO extends DAO {
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
-            con.close();
+            //con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -221,7 +220,7 @@ public class BienLaiNhapDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
+                //con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();
@@ -270,7 +269,7 @@ public class BienLaiNhapDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
+               // con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();
