@@ -91,7 +91,7 @@ public class XuatHangDAO extends DAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String sql = "  select sp.maSp, sp.idSanPham,mh.tenMatHang,mh.maMatHang, sp.gia,sp.hanSuDung,sp.idMatHang,blk.idBienLaiKho,blk.soLuong,mh.donVi from [SanPham] sp inner join   [BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho \n"
-                + "  inner join  [BienLaiNhap] bln on sp.idBienLaiKho=bln.idBienLaiKho inner join [MatHang] mh on sp.idMatHang=mh.idMatHang where idKho=" + kho.getId();
+                + "  inner join  [BienLaiNhap] bln on sp.idBienLaiKho=bln.idBienLaiKho inner join [MatHang] mh on sp.idMatHang=mh.idMatHang where blk.soLuong>0 and idKho=" + kho.getId();
         ArrayList<RecordSanPham> listMHTrongKho = new ArrayList<RecordSanPham>();
         try {
             stm = con.prepareStatement(sql);
