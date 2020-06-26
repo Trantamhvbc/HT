@@ -396,11 +396,14 @@ public class GDXacNhanNhapHang extends javax.swing.JFrame {
                 bienLaiNhap.setTongCong(tongTien);
                 bienLaiNhap.setPhieuThuChi(phieuThuChi);
                 bienLaiNhapDAO.themBienLaiNhapPhieuThuChi(bienLaiNhap, sp);
+                
+                
             }
 
         }
         ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
         JOptionPane.showMessageDialog(null, "Đã hoàn tất nhập hàng", "Nhập hàng thành công", JOptionPane.INFORMATION_MESSAGE, icon);
+        this.dispose();
     }//GEN-LAST:event_jButtonDongBillNotInActionPerformed
 
     /**
