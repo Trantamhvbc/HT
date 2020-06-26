@@ -201,6 +201,9 @@ public class DangNhap extends javax.swing.JFrame {
                 chuyen.setVisible(true);
                 this.dispose();
             }
+            else if (out.getVaiTro().equals("Quản lí kho")){
+                    
+            }
         }
         else{
             JOptionPane.showMessageDialog( new Frame(), "Tài Khoản Hoặc Mật Khẩu Không Chính Xác");
