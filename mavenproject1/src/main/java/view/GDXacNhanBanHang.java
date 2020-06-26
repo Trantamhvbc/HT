@@ -33,7 +33,8 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
     private PhieuThuChi ptc;
     private int tienHang;
     private GDBanHang h;
-    public GDXacNhanBanHang(int tienHang, HoaDonBanHang hdbh, PhieuThuChi phieuThu,GDBanHang h) {
+
+    public GDXacNhanBanHang(int tienHang, HoaDonBanHang hdbh, PhieuThuChi phieuThu, GDBanHang h) {
         initComponents();
         this.ptc = phieuThu;
         this.HDBH = hdbh;
@@ -80,7 +81,12 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
                     if (field.equals(jTextFieldKhachDua)) {
                         int number = Integer.parseInt(jTextFieldKhachDua.getText());
                         jTextFieldKhachDua.setText(dinhDangTien(number));
-                        int number2 = tienHang - number;
+                        int number2 = number - tienHang;
+                        if (number2 < 0) {
+                            JOptionPane.showMessageDialog(field, "tien Khach Dua phai lớn hơn tiền hàng", "Warning", JOptionPane.WARNING_MESSAGE);
+                            field.requestFocus();
+                        }
+                        else
                         jTextFieldTraKhach.setText(dinhDangTien(number2));
                     }
                 } catch (Exception e2) {
@@ -221,15 +227,15 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
         String chuyenKhoan = jComboBoxChuyenKhoan.getSelectedItem().toString();
         ptc.setChuyenKhoan(chuyenKhoan);
         ptc.setSoTien(tienHang);
-        PhieuThuChiDAO phieuThuChiDAO=new PhieuThuChiDAO();
+        PhieuThuChiDAO phieuThuChiDAO = new PhieuThuChiDAO();
         phieuThuChiDAO.themPhieuThuChi(ptc);
         HoaDonBanHangDAO hoaDonBanHangDAO = new HoaDonBanHangDAO();
         hoaDonBanHangDAO.themHoaDonBanHang(HDBH);
         ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
         JOptionPane.showMessageDialog(null, "Đã thanh toán thành công cho khách hàng", "thanh toán thành công", JOptionPane.INFORMATION_MESSAGE, icon);
         this.h.addTongTien(tienHang);
-        
-        
+
+
     }//GEN-LAST:event_jButtonDongBillVaInActionPerformed
 
     /**

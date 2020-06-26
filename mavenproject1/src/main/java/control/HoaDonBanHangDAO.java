@@ -44,6 +44,7 @@ public class HoaDonBanHangDAO extends DAO {
                ResultSet  result = prstm.getGeneratedKeys();
                while(result.next()){
                    idHoaDon =  result.getInt(1);
+                   
                }
             }
             else{

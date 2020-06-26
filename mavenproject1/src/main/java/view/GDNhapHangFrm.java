@@ -288,7 +288,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         KhoDAO khoDAO = new KhoDAO();
         this.listKho = khoDAO.getAllKho();
         khoSelected = listKho.get(0);
-
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listKho.size(); i++) {
             model.addElement("Kho ở " + listKho.get(i).getDiaChi());
@@ -879,7 +878,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         jLabel18.setText("TỔNG");
 
         jTextField14.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField14.setText("80");
         jTextField14.setEnabled(false);
         jTextField14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -888,11 +886,9 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         });
 
         jTextField15.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField15.setText("326,000");
         jTextField15.setEnabled(false);
 
         jTextField16.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField16.setText("0");
         jTextField16.setEnabled(false);
 
         jTextField17.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -1063,14 +1059,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField14ActionPerformed
-
-    private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField18ActionPerformed
-
     private void jComboBoxNccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxNccMouseClicked
     }//GEN-LAST:event_jComboBoxNccMouseClicked
 
@@ -1174,6 +1162,10 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
             System.out.println("hsd chua duoc chon");
             e.printStackTrace();
         }
+        if (soLuong <= 0) {
+            check = false;
+            JOptionPane.showMessageDialog(null, "Số lượng phải lớn hơn 0 !", "cảnh báo chọn số lượng", JOptionPane.WARNING_MESSAGE);
+        }
         if (row == -1) {
             check = false;
             JOptionPane.showMessageDialog(null, "Chọn mặt hàng bạn muốn thêm!", "cảnh báo chọn mặt hàng", JOptionPane.WARNING_MESSAGE);
@@ -1216,6 +1208,39 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         }
     }//GEN-LAST:event_JButtonThemActionPerformed
 
+    private void jButtonThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThanhToanActionPerformed
+        String ngayNhap = ((JTextField) jDateChooserNgayLap.getDateEditor().getUiComponent()).getText();
+        System.out.println(nccSelected.getTen() + " ten ncc da chon");
+        System.out.println(nvSelected.getHoTen() + " ten nvSelected da chon");
+        System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
+        String dienGiai = jTextFieldLyDo.getText();
+        String ghiChu = jTextFieldGhiChu.getText();
+
+        GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
+
+        dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        dXacNhanNhapHang.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                JFrame frame = (JFrame) e.getSource();
+
+                int result = JOptionPane.showConfirmDialog(
+                    frame,
+                    "Có phải bạn muốn đóng cửa sổ này?",
+                    "Exit Application",
+                    JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    listMatHangDaChon.clear();
+                    loadThemMatHangDaChon();
+                }
+            }
+        });
+        dXacNhanNhapHang.pack();
+        dXacNhanNhapHang.setLocationRelativeTo(null);
+        dXacNhanNhapHang.setVisible(true);
+    }//GEN-LAST:event_jButtonThanhToanActionPerformed
+
     private void jButtonXoaDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonXoaDongActionPerformed
         int row = jTableMatHangThem.getSelectedRow();
         String ma = jTableMatHangThem.getValueAt(row, 1).toString();
@@ -1243,39 +1268,13 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         loadThemMatHangDaChon();
     }//GEN-LAST:event_jButtonXoaDongActionPerformed
 
-    private void jButtonThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThanhToanActionPerformed
-        String ngayNhap = ((JTextField) jDateChooserNgayLap.getDateEditor().getUiComponent()).getText();
-        System.out.println(nccSelected.getTen() + " ten ncc da chon");
-        System.out.println(nvSelected.getHoTen() + " ten nvSelected da chon");
-        System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
-        String dienGiai = jTextFieldLyDo.getText();
-        String ghiChu = jTextFieldGhiChu.getText();
+    private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField18ActionPerformed
 
-        GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
-
-        dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        dXacNhanNhapHang.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                JFrame frame = (JFrame) e.getSource();
-
-                int result = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Có phải bạn muốn đóng cửa sổ này?",
-                        "Exit Application",
-                        JOptionPane.YES_NO_OPTION);
-
-                if (result == JOptionPane.YES_OPTION) {
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    listMatHangDaChon.clear();
-                    loadThemMatHangDaChon();
-                }
-            }
-        });
-        dXacNhanNhapHang.pack();
-        dXacNhanNhapHang.setLocationRelativeTo(null);
-        dXacNhanNhapHang.setVisible(true);
-
-    }//GEN-LAST:event_jButtonThanhToanActionPerformed
+    private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField14ActionPerformed
 
     /**
      * @param args the command line arguments
