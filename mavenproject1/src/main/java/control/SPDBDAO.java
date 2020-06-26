@@ -50,7 +50,7 @@ public class SPDBDAO extends DAO{
     }
     public ArrayList <RecordSanPham> getAllSanPhamTrenCuaHang(){
         ArrayList<RecordSanPham> res =  new ArrayList();
-        String sql = "select MatHang.*,SanPham.*, BienLaiXuat.tiLeLai from  [MatHang],[SanPham] ,\n" +
+        String sql = "select MatHang.*,SanPham.*, BienLaiKho.soLuong from  [MatHang],[SanPham] ,\n" +
                 "[BienLaiKho] , [BienLaiXuat] WHERE SanPham.idBienLaiKho = BienLaiKho.idBienLaiKho \n" +
                 "and MatHang.idMatHang = SanPham.idMatHang and BienLaiKho.idBienLaiKho = BienLaiXuat.idBienLaiKho and BienLaiXuat.tiLeLai > 0";
         try {
@@ -68,7 +68,7 @@ public class SPDBDAO extends DAO{
                sp.setIdSanPham(result.getInt("idSanPham") );
                sp.setGia(result.getInt("gia"));
                sp.setHanSuDung(result.getString("hanSuDung"));
-               int hienco = result.getInt("tiLeLai");
+               int hienco = result.getInt("soLuong");
                RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, hienco));
                res.add(rcsp);
             }

@@ -68,7 +68,6 @@ public class GDBanHang extends javax.swing.JFrame {
         Kho kho = new Kho();
         kho.setId(1);
         loadSanPham(kho);
-        loadKho();
         loadNV();
         jTextFieldSoHD.setText(createMatBienLai());
         hoadonDonBanHang =  new HoaDonBanHang();
@@ -79,7 +78,6 @@ public class GDBanHang extends javax.swing.JFrame {
         Kho kho = new Kho();
         kho.setId(1);
         loadSanPham(kho);
-        loadKho();
         this.selectNV = e;
         this.back = back;
         this.tongtien = tongtien;
@@ -237,26 +235,6 @@ public class GDBanHang extends javax.swing.JFrame {
         defaultTableModel.fireTableDataChanged();
     }
 
-    void loadKho() {
-        jComboBoxKho.removeAllItems();
-        KhoDAO khoDAO = new KhoDAO();
-        ArrayList<Kho> listKho = khoDAO.getAllKho();
-        selectedKho = listKho.get(0);
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        for (int i = 0; i < listKho.size(); i++) {
-            model.addElement("Cửa Hàng Tại " + listKho.get(i).getDiaChi());
-        }
-        jComboBoxKho.setModel(model);
-        jComboBoxKho.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                JComboBox comboBoxTest = (JComboBox) e.getSource();
-                int stt = comboBoxTest.getSelectedIndex();
-                selectedKho = listKho.get(stt);
-                loadSanPham(selectedKho);
-            }
-        });
-    }
     public void loadChoseDay(){ 
         Date date = new Date(); 
         jDateChooserNgayLap.setDate(date);
@@ -301,8 +279,6 @@ public class GDBanHang extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableSanPham = new javax.swing.JTable();
         jButtonThem = new javax.swing.JButton();
-        jComboBoxKho = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         jSpinnerSoLuong = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -355,7 +331,7 @@ public class GDBanHang extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addGap(18, 18, 18)
@@ -424,12 +400,6 @@ public class GDBanHang extends javax.swing.JFrame {
                 .addComponent(jButtonThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-
-        jComboBoxKho.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jComboBoxKho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel4.setText("Kho");
 
         jLabel3.setText("Số Lượng");
 
@@ -598,11 +568,7 @@ public class GDBanHang extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSpinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(30, 30, 30)
-                        .addComponent(jComboBoxKho, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1))
         );
@@ -615,9 +581,7 @@ public class GDBanHang extends javax.swing.JFrame {
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jSpinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
-                            .addComponent(jComboBoxKho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSpinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(14, 14, 14)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -757,7 +721,6 @@ public class GDBanHang extends javax.swing.JFrame {
     private javax.swing.JButton jButtonThanhToan;
     private javax.swing.JButton jButtonThem;
     private javax.swing.JButton jButtonXoaDong;
-    private javax.swing.JComboBox<String> jComboBoxKho;
     private com.toedter.calendar.JDateChooser jDateChooserNgayLap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -770,7 +733,6 @@ public class GDBanHang extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
