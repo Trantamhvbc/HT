@@ -205,7 +205,7 @@ public class DangNhap extends javax.swing.JFrame {
                 GDQuanLiKho chuyen =  new GDQuanLiKho(out);
                 chuyen.setVisible(true);
                 this.dispose();
-           
+
             }
         }
         else{

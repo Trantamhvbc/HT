@@ -9,6 +9,7 @@ import static control.DAO.con;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import model.BienLaiNhap;
 import model.SanPham;
 import model.BienLaiXuat;
@@ -51,23 +52,18 @@ public class BienLaiXuatDAO extends DAO {
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             System.out.println(sql2);
-            stm = con.prepareStatement(sql2);
-            stm.executeUpdate();
-            
-            String sql3 = "select idBienLaiKho from [BienLaiKho]";
-            stm = con.prepareStatement(sql3);
-            rs = stm.executeQuery();
-            int maxId = 0;
-            while (rs.next()) {
-                int tmp = rs.getInt("idBienLaiKho");
-                if (maxId < tmp) {
-                    maxId = tmp;
+            stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
+            int maxId=stm.executeUpdate();
+            if(maxId>0){
+                ResultSet resultSet=stm.getGeneratedKeys();
+                while(resultSet.next()){
+                    maxId=resultSet.getInt(1);
                 }
             }
             idBienLaiKho = "'" + (maxId) + "',";
             String sql4 = "update [BienLaiKho] set soLuong = soLuong - " + bienLaiXuat.getSoLuong() + " where idBienLaiKho=" + pham.getBienLaiKho().getId();
             System.out.println(sql4);
-            sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
+            String sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
                     + " values(" + idBienLaiKho + maSanPham + gia + hanSuDung + idMatHang + ")";
             String sql = "insert into [BienLaiXuat] (idBienLaiKho,tiLeThue,idCuaHang,idNhanVien,tiLeLai)"
                     + " values(" + idBienLaiKho + tiLeThue + idCuaHang + idNhanVien + tiLeLai + ")";
