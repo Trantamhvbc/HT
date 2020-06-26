@@ -59,10 +59,7 @@ public class BienLaiNhapDAO extends DAO {
         } finally {
             try {
                 stm.close();
-<<<<<<< HEAD
-                //con.close();
-=======
->>>>>>> origin/duongnguyen2
+
             } catch (SQLException ex) {
                 //
             }
@@ -130,11 +127,7 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-<<<<<<< HEAD
-            con.commit();
-           // con.close();
-=======
->>>>>>> origin/duongnguyen2
+
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,10 +193,6 @@ public class BienLaiNhapDAO extends DAO {
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
-<<<<<<< HEAD
-            //con.close();
-=======
->>>>>>> origin/duongnguyen2
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -219,10 +208,6 @@ public class BienLaiNhapDAO extends DAO {
         } finally {
             try {
                 stm.close();
-<<<<<<< HEAD
-                //con.close();
-=======
->>>>>>> origin/duongnguyen2
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();
