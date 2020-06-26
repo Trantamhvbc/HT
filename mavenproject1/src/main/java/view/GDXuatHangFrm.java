@@ -131,10 +131,9 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
             @Override
             public void run() {
                 while (!exit) {
-                    loadNV();
                     loadDanhSachMH();
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(60000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }

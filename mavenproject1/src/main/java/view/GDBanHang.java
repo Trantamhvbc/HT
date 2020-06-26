@@ -62,7 +62,8 @@ public class GDBanHang extends javax.swing.JFrame {
     private HoaDonBanHang hoadonDonBanHang = null;
     private int tienHang = 0;
     private int tongtien = 0;
-    private  GDNhanVienBanHang back ;
+    private GDNhanVienBanHang back;
+
     public GDBanHang() {
         initComponents();
         Kho kho = new Kho();
@@ -70,10 +71,11 @@ public class GDBanHang extends javax.swing.JFrame {
         loadSanPham(kho);
         loadNV();
         jTextFieldSoHD.setText(createMatBienLai());
-        hoadonDonBanHang =  new HoaDonBanHang();
+        hoadonDonBanHang = new HoaDonBanHang();
         loadSanPhamDaChon();
     }
-    public GDBanHang(NhanVien e,int tongtien, GDNhanVienBanHang back) {
+
+    public GDBanHang(NhanVien e, int tongtien, GDNhanVienBanHang back) {
         initComponents();
         Kho kho = new Kho();
         kho.setId(1);
@@ -83,12 +85,13 @@ public class GDBanHang extends javax.swing.JFrame {
         this.tongtien = tongtien;
         loadNV();
         jTextFieldSoHD.setText(createMatBienLai());
-        hoadonDonBanHang =  new HoaDonBanHang();
+        hoadonDonBanHang = new HoaDonBanHang();
         loadSanPhamDaChon();
         loadTongTien();
         loadChoseDay();
-        
-        }
+
+    }
+
     @Override
     protected void processWindowEvent(final WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
@@ -99,17 +102,10 @@ public class GDBanHang extends javax.swing.JFrame {
 //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
     //thÃªm sá»± kiá»‡n Ã´ nháº­p Ä‘Æ¡n giÃ¡ Ä‘á»‹nh dáº¡ng money
 
-  
-
-   
-
     void tinhTongCong() {
         jLabel7.setText(dinhDangTien(tienHang));
     }
 
-
-
-  
     int countDigit(int number) {
         int count = 0;
         while (number > 0) {
@@ -121,7 +117,7 @@ public class GDBanHang extends javax.swing.JFrame {
 
     void loadNV() {
         jLabel12.setText(this.selectNV.getHoTen());
-        
+
     }
 
     String createMatBienLai() {
@@ -203,7 +199,7 @@ public class GDBanHang extends javax.swing.JFrame {
     }
 
     void loadSanPhamDaChon() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "tên mặt hàng", "Số Lượng", "đơn vị","giá", "Thành Tiền"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "tên mặt hàng", "Số Lượng", "đơn vị", "giá", "Thành Tiền"}, 0);
         defaultTableModel.setRowCount(0);
         jTableSpDaChon.setModel(defaultTableModel);
         jTableSpDaChon.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -220,13 +216,13 @@ public class GDBanHang extends javax.swing.JFrame {
         jTableSpDaChon.setSelectionForeground(new Color(204, 255, 255));
         int stt = 0;
         this.tienHang = 0;
-        
+
         for (int i = 0; i < hoadonDonBanHang.getListSanPhamSelected().size(); i++) {
             RecordSanPham recordSanPham = hoadonDonBanHang.getListSanPhamSelected().get(i);
             tiLeCK = listTiLeCK.get(i);
             SanPham sp = recordSanPham.getPham();
             int soLuong = recordSanPham.getSoLuong();
-            int thanhTien =   recordSanPham.getSoLuong()* sp.getGia() ;
+            int thanhTien = recordSanPham.getSoLuong() * sp.getGia();
             tienHang += thanhTien;
             defaultTableModel.addRow(new Object[]{stt, sp.getMaMatHang(), sp.getTenMatHang(), soLuong, sp.getDonViTinh(), sp.getGia(), dinhDangTien(thanhTien)});
             stt++;
@@ -237,8 +233,10 @@ public class GDBanHang extends javax.swing.JFrame {
 
     public void loadChoseDay(){ 
         Date date = new Date(); 
+
         jDateChooserNgayLap.setDate(date);
     }
+
     public class VisitorRenderer extends DefaultTableCellRenderer {
 
         @Override
@@ -257,13 +255,16 @@ public class GDBanHang extends javax.swing.JFrame {
         }
         return false;
     }
-    public void addTongTien(int tienHang){
+
+    public void addTongTien(int tienHang) {
         this.tongtien += tienHang;
         loadTongTien();
     }
-    void loadTongTien(){
+
+    void loadTongTien() {
         jLabel14.setText(this.tongtien + "");
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -604,7 +605,7 @@ public class GDBanHang extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "loi", "cảnh báo mặt hàng", JOptionPane.WARNING_MESSAGE);
         } else if (soLuong > listSanPham2.get(row).getSoLuong()) {
             check = false;
-            JOptionPane.showMessageDialog(null, "2","3", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "2", "3", JOptionPane.WARNING_MESSAGE);
         } else {
             RecordSanPham recordSanPham = listSanPham2.get(row);
             int soLuongBD = recordSanPham.getSoLuong();
@@ -665,26 +666,26 @@ public class GDBanHang extends javax.swing.JFrame {
             phieuThuChi.setNv(selectNV);
             phieuThuChi.setTenDoiTuong("Khách hàng");
             phieuThuChi.setSoPhieu(soPhieu);
-            GDXacNhanBanHang dXacNhanBanHang = new GDXacNhanBanHang(tienHang, hoadonDonBanHang, phieuThuChi,this);
+            GDXacNhanBanHang dXacNhanBanHang = new GDXacNhanBanHang(tienHang, hoadonDonBanHang, phieuThuChi, this);
             dXacNhanBanHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            
+
             dXacNhanBanHang.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
-                    
+
                     JFrame frame = (JFrame) e.getSource();
                     int result = JOptionPane.showConfirmDialog(
-                        frame,
-                        "gggac ",
-                        "Exit Application",
-                        JOptionPane.YES_NO_OPTION);
+                            frame,
+                            "gggac ",
+                            "Exit Application",
+                            JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
-                        
+
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         loadSanPham(selectedKho);
                         hoadonDonBanHang = new HoaDonBanHang();
-                        
+
                         loadSanPhamDaChon();
-                        jLabel7.setText(0+"");
+                        jLabel7.setText(0 + "");
                     }
                 }
             });

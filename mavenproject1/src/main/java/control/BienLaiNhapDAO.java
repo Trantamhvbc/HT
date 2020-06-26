@@ -99,7 +99,6 @@ public class BienLaiNhapDAO extends DAO {
             int maxId;
             stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
             maxId = stm.executeUpdate();
-            con.commit();
             if (maxId > 0) {
                 ResultSet resultSet = stm.getGeneratedKeys();
                 while (resultSet.next()) {
@@ -111,7 +110,7 @@ public class BienLaiNhapDAO extends DAO {
             rs = stm.executeQuery();
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
-            sql3 = "select max(idPhieuThuChi) as idPhieuThuChi from [CuaHangHoaQua].[dbo].[PhieuThuChi]";
+            sql3 = "select max(idPhieuThuChi) as idPhieuThuChi from [PhieuThuChi]";
             sql3 = "select max(idPhieuThuChi) as idPhieuThuChi from [PhieuThuChi]";
             stm = con.prepareStatement(sql3);
             rs = stm.executeQuery();
@@ -128,7 +127,6 @@ public class BienLaiNhapDAO extends DAO {
             System.out.println(sql);
             stm = con.prepareStatement(sql3);
             stm.executeUpdate();
-            con.commit();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();
@@ -184,7 +182,6 @@ public class BienLaiNhapDAO extends DAO {
             stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
             int maxId = 0;
             maxId = stm.executeUpdate();
-            con.commit();
             if (maxId > 0) {
                 ResultSet resultSet = stm.getGeneratedKeys();
                 while (resultSet.next()) {
@@ -205,7 +202,6 @@ public class BienLaiNhapDAO extends DAO {
             System.out.println(sql);
             stm = con.prepareStatement(sql3);
             stm.executeUpdate();
-            con.commit();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             con.commit();

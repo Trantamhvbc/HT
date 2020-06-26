@@ -99,7 +99,6 @@ public class HoaDonBanHangDAO extends DAO {
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();
             con.commit();

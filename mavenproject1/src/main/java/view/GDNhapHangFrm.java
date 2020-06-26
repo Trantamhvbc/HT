@@ -78,7 +78,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         createMatBienLai();
         loadUpdateDB();
     }
-
     @Override
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         loadDanhSachMH();
@@ -94,11 +93,9 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
             @Override
             public void run() {
                 while (!exit) {
-                    loadNCC();
-                    loadNV();
                     loadDanhSachMH();
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(60000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -277,8 +274,9 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
             public void itemStateChanged(ItemEvent e) {
                 JComboBox comboBoxTest = (JComboBox) e.getSource();
                 int stt = comboBoxTest.getSelectedIndex();
-                if(stt!=-1)
-                nvSelected = listNV.get(stt);
+                if (stt != -1) {
+                    nvSelected = listNV.get(stt);
+                }
             }
         });
     }
@@ -322,8 +320,9 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
             public void itemStateChanged(ItemEvent e) {
                 JComboBox comboBoxTest = (JComboBox) e.getSource();
                 int stt = comboBoxTest.getSelectedIndex();
-                if(stt!=-1)
-                nccSelected = listNcc.get(stt);
+                if (stt != -1) {
+                    nccSelected = listNcc.get(stt);
+                }
             }
         });
 

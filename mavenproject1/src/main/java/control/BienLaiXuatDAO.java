@@ -54,7 +54,6 @@ public class BienLaiXuatDAO extends DAO {
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();
-            con.commit();
             
             String sql3 = "select idBienLaiKho from [BienLaiKho]";
             stm = con.prepareStatement(sql3);
@@ -76,10 +75,8 @@ public class BienLaiXuatDAO extends DAO {
             
             stm = con.prepareStatement(sql3);
             stm.executeUpdate();
-            con.commit();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
             stm = con.prepareStatement(sql4);
             stm.executeUpdate();
             con.commit();
