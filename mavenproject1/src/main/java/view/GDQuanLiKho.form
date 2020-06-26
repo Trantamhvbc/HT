@@ -230,7 +230,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="M&#xe3; Nh&#xe2;n Vi&#xea;n"/>
+            <Property name="text" type="java.lang.String" value="Vai Tr&#xf2;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

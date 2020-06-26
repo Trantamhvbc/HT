@@ -207,6 +207,11 @@ public class DangNhap extends javax.swing.JFrame {
                 this.dispose();
 
             }
+            if (out.getVaiTro().equals("Kế toán")) {
+                GDKeToan chuyen = new GDKeToan(out);
+                chuyen.setVisible(true);
+                this.dispose();
+            }
         }
         else{
             JOptionPane.showMessageDialog( new Frame(), "Tài Khoản Hoặc Mật Khẩu Không Chính Xác");

@@ -25,6 +25,10 @@ public class GDQuanLiKho extends javax.swing.JFrame {
     public GDQuanLiKho(NhanVien nv) {
         initComponents();
         this.nv = nv;
+        jLabel7.setText(nv.getHoTen());
+        jLabel8.setText(nv.getVaiTro());
+        jLabel10.setText(nv.getSoDienThoai());
+        jLabel9.setText(nv.getEmail());
     }
 
     /**
@@ -126,7 +130,7 @@ public class GDQuanLiKho extends javax.swing.JFrame {
 
         jLabel4.setText("SDT");
 
-        jLabel5.setText("Mã Nhân Viên");
+        jLabel5.setText("Vai Trò");
 
         jLabel6.setText("Email");
 
