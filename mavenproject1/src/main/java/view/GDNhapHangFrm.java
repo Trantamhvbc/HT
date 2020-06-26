@@ -96,7 +96,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
                 while (!exit) {
                     loadDanhSachMH();
                     try {
-                        Thread.sleep(3000);
+                        Thread.sleep(60000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -1252,8 +1252,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         String ghiChu = jTextFieldGhiChu.getText();
 
         GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
-        listMatHangDaChon.clear();
-        loadThemMatHangDaChon();
+
         dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         dXacNhanNhapHang.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -1267,7 +1266,8 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
 
                 if (result == JOptionPane.YES_OPTION) {
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+                    listMatHangDaChon.clear();
+                    loadThemMatHangDaChon();
                 }
             }
         });

@@ -74,13 +74,6 @@ public class XuatHangDAO extends DAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-
-                
-            } catch (SQLException ex) {
-            }
         }
         return listSanPhamDX;
     }
@@ -117,14 +110,7 @@ public class XuatHangDAO extends DAO {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-                
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return listMHTrongKho;
     }
 }

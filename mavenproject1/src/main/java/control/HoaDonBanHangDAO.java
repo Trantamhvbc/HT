@@ -53,13 +53,7 @@ public class HoaDonBanHangDAO extends DAO {
             
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                con.rollback();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
        SPDBDAO spDAO = new SPDBDAO();
        for(RecordSanPham i : hdbh.getListSanPhamSelected()){
            if( spDAO.insertRecorpSanPham(i, idHoaDon) == -1){
@@ -103,13 +97,7 @@ public class HoaDonBanHangDAO extends DAO {
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
     }
 
 
@@ -137,13 +125,7 @@ public class HoaDonBanHangDAO extends DAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return hoaDonBanHangs;
     }
    
@@ -198,13 +180,7 @@ public class HoaDonBanHangDAO extends DAO {
           
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return hoaDonBanHangs;
     }
      public static void main(String[] args) {

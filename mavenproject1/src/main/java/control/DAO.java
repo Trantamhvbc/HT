@@ -16,17 +16,18 @@ public class DAO {
     protected static Connection con = null;
 
     public DAO() {
-        
+        if (con == null) {
             try {
 //                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //                con = DriverManager.getConnection(dbURL, user, pass);
-                  con=HikariCPDataSource.getConnection();
+                con = HikariCPDataSource.getConnection();
                 // Code here.
             } // Handle any errors that may have occurred.
             catch (Exception e) {
                 e.printStackTrace();
             }
-        
+        }
+
     }
 
     public Connection getCon() {
@@ -39,12 +40,12 @@ public class DAO {
         ResultSet rs = null;
         String sql2 = "select * from taikhoan";
         try {
-                    con=HikariCPDataSource.getConnection();
+            con = HikariCPDataSource.getConnection();
             stm = con.prepareStatement(sql2);
-            rs=stm.executeQuery();
-            while(rs.next()){
-               System.out.println("id:\t"+rs.getString(1));
-           }
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                System.out.println("id:\t" + rs.getString(1));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

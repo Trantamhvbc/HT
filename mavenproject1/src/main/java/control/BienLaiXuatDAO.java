@@ -51,18 +51,17 @@ public class BienLaiXuatDAO extends DAO {
         try {
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
-            System.out.println(sql2);
             stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
             int maxId=stm.executeUpdate();
             if(maxId>0){
                 ResultSet resultSet=stm.getGeneratedKeys();
                 while(resultSet.next()){
                     maxId=resultSet.getInt(1);
+                    break;
                 }
             }
             idBienLaiKho = "'" + (maxId) + "',";
             String sql4 = "update [BienLaiKho] set soLuong = soLuong - " + bienLaiXuat.getSoLuong() + " where idBienLaiKho=" + pham.getBienLaiKho().getId();
-            System.out.println(sql4);
             String sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
                     + " values(" + idBienLaiKho + maSanPham + gia + hanSuDung + idMatHang + ")";
             String sql = "insert into [BienLaiXuat] (idBienLaiKho,tiLeThue,idCuaHang,idNhanVien,tiLeLai)"
@@ -74,26 +73,10 @@ public class BienLaiXuatDAO extends DAO {
             stm.executeUpdate();
             stm = con.prepareStatement(sql4);
             stm.executeUpdate();
-            con.commit();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiXuatDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
             return false;
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
-        }
+        } 
         return true;
     }
 }

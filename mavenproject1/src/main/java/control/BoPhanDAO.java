@@ -38,13 +38,7 @@ public class BoPhanDAO extends DAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return boPhan;
 
     }
@@ -69,12 +63,6 @@ public class BoPhanDAO extends DAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
         }
         return listBoPhan;
     }

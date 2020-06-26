@@ -191,22 +191,8 @@ public class CongNoDAO extends DAO {
             stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...CongNoDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+           
             return false;
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
         }
         return true;
     }

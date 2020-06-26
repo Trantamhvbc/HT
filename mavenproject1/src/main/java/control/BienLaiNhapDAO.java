@@ -57,11 +57,7 @@ public class BienLaiNhapDAO extends DAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
+        
         }
         return listBienLaiNhap;
     }
@@ -94,6 +90,7 @@ public class BienLaiNhapDAO extends DAO {
 
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             int maxId;
+            System.out.println(sql2);
             stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
             maxId = stm.executeUpdate();
             if (maxId > 0) {
@@ -129,14 +126,7 @@ public class BienLaiNhapDAO extends DAO {
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+          
             return false;
         }
         return true;
@@ -190,27 +180,11 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
             return false;
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
-        }
+        } 
         return true;
     }
 
@@ -239,23 +213,9 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+       
             return false;
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
-        }
+        } 
         return true;
     }
 
