@@ -69,8 +69,11 @@ public class SPDBDAO extends DAO{
                sp.setGia(result.getInt("gia"));
                sp.setHanSuDung(result.getString("hanSuDung"));
                int hienco = result.getInt("soLuong");
-               RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, hienco));
-               res.add(rcsp);
+               int tongHienCo = getTongSoLuongSPDB(sp, hienco) ;
+               if(tongHienCo > 0){
+                    RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, tongHienCo));
+                    res.add(rcsp);
+               }
             }
         } catch (SQLException ex) {
             Logger.getLogger(SPDBDAO.class.getName()).log(Level.SEVERE, null, ex);
