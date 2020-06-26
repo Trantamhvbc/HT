@@ -174,16 +174,14 @@ public class BienLaiNhapDAO extends DAO {
                 ResultSet resultSet = stm.getGeneratedKeys();
                 while (resultSet.next()) {
                     maxId = resultSet.getInt(1);
+                    break;
                 }
             }
-            
-            String sql3 = "select idBienLaiKho from [BienLaiKho]";
-            stm = con.prepareStatement(sql3);
-            rs = stm.executeQuery();
+          
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
             System.out.println("maxID" + (maxId));
-            sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
+            String sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
                     + " values(" + idBienLaiKho + maSanPham + gia + hanSuDung + idMatHang + ")";
             String sql = "insert into [BienLaiNhap] (idBienLaiKho,idHopDong,idNhanVien)"
                     + " values(" + idBienLaiKho + idHopDong + idNhanVien + ")";
@@ -192,18 +190,10 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+            
             return false;
         } finally {
             try {

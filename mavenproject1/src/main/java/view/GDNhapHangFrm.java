@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.UIManager;
 import javax.swing.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -66,7 +68,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
     private ArrayList<MatHang> listMatHangSearch = new ArrayList<>();
     private int giaMatHang;
     private ArrayList<RecordSanPham> listMatHangDaChon = new ArrayList<>();
-
+    Thread updtae ;
     public GDNhapHangFrm() {
         initComponents();
         loadNCC();
@@ -108,6 +110,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
             }
         };
         run = new Thread(task);
+        this.updtae = run;
         run.start();
     }
 
@@ -1250,7 +1253,13 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
         String dienGiai = jTextFieldLyDo.getText();
         String ghiChu = jTextFieldGhiChu.getText();
-
+        if(updtae != null ){
+            try {
+                updtae.sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GDNhapHangFrm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
         listMatHangDaChon.clear();
         loadThemMatHangDaChon();
