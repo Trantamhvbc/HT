@@ -78,6 +78,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         createMatBienLai();
         //loadUpdateDB();
     }
+
     @Override
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
         loadDanhSachMH();
@@ -89,6 +90,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         run = new Thread(task);
         task = new Runnable() {
             boolean exit = false;
+
             @Override
             public void run() {
                 while (!exit) {
@@ -1193,7 +1195,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         String maSp = "SP";
         sp.setMaSp(maSp);
         System.out.println(sp.toString());
-        if (check = true) {
+        if (check == true) {
             boolean check2 = false;
             for (int i = 0; i < listMatHangDaChon.size(); i++) {
                 RecordSanPham recordSanPham = listMatHangDaChon.get(i);
@@ -1248,6 +1250,8 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
         String dienGiai = jTextFieldLyDo.getText();
         String ghiChu = jTextFieldGhiChu.getText();
+        listMatHangDaChon.clear();
+        loadThemMatHangDaChon();
         GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
         dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         dXacNhanNhapHang.addWindowListener(new WindowAdapter() {
@@ -1262,6 +1266,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
 
                 if (result == JOptionPane.YES_OPTION) {
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
                 }
             }
         });
