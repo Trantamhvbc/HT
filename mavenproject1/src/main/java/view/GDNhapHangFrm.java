@@ -96,7 +96,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
                 while (!exit) {
                     loadDanhSachMH();
                     try {
-                        Thread.sleep(60000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -1250,9 +1250,10 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
         String dienGiai = jTextFieldLyDo.getText();
         String ghiChu = jTextFieldGhiChu.getText();
+
+        GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
         listMatHangDaChon.clear();
         loadThemMatHangDaChon();
-        GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
         dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         dXacNhanNhapHang.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -1273,6 +1274,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         dXacNhanNhapHang.pack();
         dXacNhanNhapHang.setLocationRelativeTo(null);
         dXacNhanNhapHang.setVisible(true);
+
     }//GEN-LAST:event_jButtonThanhToanActionPerformed
 
     /**
