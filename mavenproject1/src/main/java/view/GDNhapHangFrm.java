@@ -89,7 +89,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         run = new Thread(task);
         task = new Runnable() {
             boolean exit = false;
-
             @Override
             public void run() {
                 while (!exit) {

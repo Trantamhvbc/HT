@@ -96,20 +96,16 @@ public class HoaDonBanHangDAO extends DAO {
         String sql2 = "insert into [HoaDonBanHang] (soLuong,ngay,idSanPham,soTien,idNhanVien) values "
                 + " values(" + soLuong + ngay  + soTien + idNhanVien + ")";
         try {
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();
-            con.commit();
             stm.close();
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -144,7 +140,6 @@ public class HoaDonBanHangDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -206,7 +201,6 @@ public class HoaDonBanHangDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }

@@ -51,7 +51,6 @@ public class BienLaiXuatDAO extends DAO {
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             System.out.println(sql2);
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();
             
@@ -80,7 +79,6 @@ public class BienLaiXuatDAO extends DAO {
             stm = con.prepareStatement(sql4);
             stm.executeUpdate();
             con.commit();
-            stm.close();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -95,7 +93,7 @@ public class BienLaiXuatDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                //con.close();
+
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();

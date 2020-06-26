@@ -85,10 +85,8 @@ public class MatHangDAO extends DAO {
         String sql = "insert into [MatHang] (maMatHang,tenMatHang,donVi,moTa)"
                 + " values(" + ma + ten + donVi + mota + ")";
         try {
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();

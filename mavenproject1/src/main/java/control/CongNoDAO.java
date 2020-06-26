@@ -90,13 +90,11 @@ public class CongNoDAO extends DAO {
                 listRecordCongNoNCC.add(recordCongNoNCC);
             }
             stm.close();
-            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex) {
                 //
             }
@@ -128,7 +126,6 @@ public class CongNoDAO extends DAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
             stm = con.prepareStatement(sql2);
@@ -146,8 +143,6 @@ public class CongNoDAO extends DAO {
                     + " values(" + maSoThue + soTienNo + idPhieuThuChi + idNhaCungCap + ")";
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
-            con.close();
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +158,6 @@ public class CongNoDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();
@@ -193,12 +187,8 @@ public class CongNoDAO extends DAO {
             String idPhieuThuChi = "N'" + (maxId) + "',";
             String sql = "insert into [CongNo] (maSoThue,soTienNo,idPhieuThuChi,idNhaCungCap)"
                     + " values(" + maSoThue + soTienNo + idPhieuThuChi + idNhaCungCap + ")";
-            con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
-            con.close();
-            stm.close();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -213,7 +203,6 @@ public class CongNoDAO extends DAO {
         } finally {
             try {
                 stm.close();
-                con.close();
             } catch (SQLException ex3) {
                 //
                 ex3.printStackTrace();

@@ -84,40 +84,7 @@ public class XuatHangDAO extends DAO {
         }
         return listSanPhamDX;
     }
-//    public BienLaiNhap loadBienLaiNhapTheoKho(SanPham sp) {
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//        String sql = "  select bln.idBienLaiNhap,bln.idBienLaiKho, bln.idHopDong, bln.idNhanVien from [CuaHangHoaQua].[dbo].[BienLaiNhap] bln inner join [CuaHangHoaQua].[dbo].[BienLaiKho] blk on bln.idBienLaiKho=blk.idBienLaiKho inner join [CuaHangHoaQua].[dbo].[SanPham] sp on sp.idBienLaiKho=bln.idBienLaiKho where idSanPham="+sp.getIdSanPham();
-//        BienLaiNhap bln=new BienLaiNhap();
-//        try {
-//            stm = con.prepareStatement(sql);
-//            rs = stm.executeQuery();
-//            while (rs.next()) {
-//                sp.setIdSanPham(rs.getInt("idSanPham"));
-//                sp.setTenMatHang(rs.getString("tenMatHang"));
-//                sp.setMaMatHang(rs.getString("maMatHang"));
-//                sp.setGia(rs.getInt("gia"));
-//                sp.setHanSuDung(rs.getString("hanSuDung"));
-//                sp.setIdMatHang(rs.getInt("idMatHang"));
-//                BienLaiKho blk=new BienLaiKho();
-//                blk.setId(rs.getInt("idBienLaiKho"));
-//                sp.setBienLaiKho(blk);
-//                int soLuong=rs.getInt("soLuong");
-//                sp.setDonViTinh(rs.getString("donVi"));
-//                listMHTrongKho.put(sp, new Integer(soLuong));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                stm.close();
-//                con.close();
-//            } catch (SQLException ex) {
-//                //
-//            }
-//        }
-//        return listMHTrongKho;
-//    }
+
 
     public ArrayList<RecordSanPham> loadMatHangTrongKhoTheoKho(Kho kho) {
         System.out.println("a");
