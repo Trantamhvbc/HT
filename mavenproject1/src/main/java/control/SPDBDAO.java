@@ -50,9 +50,9 @@ public class SPDBDAO extends DAO{
     }
     public ArrayList <RecordSanPham> getAllSanPhamTrenCuaHang(){
         ArrayList<RecordSanPham> res =  new ArrayList();
-        String sql = "select MatHang.*,SanPham.*, BienLaiXuat.tiLeLai from  [MatHang],[SanPham] ,\n" +
+        String sql = "select MatHang.*,SanPham.*, BienLaiKho.soLuong from  [MatHang],[SanPham] ,\n" +
                 "[BienLaiKho] , [BienLaiXuat] WHERE SanPham.idBienLaiKho = BienLaiKho.idBienLaiKho \n" +
-                "and MatHang.idMatHang = SanPham.idMatHang and BienLaiKho.idBienLaiKho = BienLaiXuat.idBienLaiKho and BienLaiXuat.tiLeLai > 0";
+                "and MatHang.idMatHang = SanPham.idMatHang and BienLaiKho.idBienLaiKho = BienLaiXuat.idBienLaiKho and BienLaiKho.soLuong > 0";
         try {
             
             PreparedStatement prstm = con.prepareStatement(sql);
@@ -68,9 +68,12 @@ public class SPDBDAO extends DAO{
                sp.setIdSanPham(result.getInt("idSanPham") );
                sp.setGia(result.getInt("gia"));
                sp.setHanSuDung(result.getString("hanSuDung"));
-               int hienco = result.getInt("tiLeLai");
-               RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, hienco));
-               res.add(rcsp);
+               int hienco = result.getInt("soLuong");
+               int tongHienCo = getTongSoLuongSPDB(sp, hienco) ;
+               if(tongHienCo > 0){
+                    RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, tongHienCo));
+                    res.add(rcsp);
+               }
             }
         } catch (SQLException ex) {
             Logger.getLogger(SPDBDAO.class.getName()).log(Level.SEVERE, null, ex);

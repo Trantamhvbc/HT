@@ -33,23 +33,23 @@ public class BienLaiNhapDAO extends DAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 BienLaiNhap bienLaiNhap = new BienLaiNhap();
-                bienLaiNhap.setIdBienLaiNhap(rs.getInt(1));
-                bienLaiNhap.setId(rs.getInt(2));// set Id bien lai kho
+                bienLaiNhap.setIdBienLaiNhap(rs.getInt("idBienLaiNhap"));
+                bienLaiNhap.setId(rs.getInt("idBienLaiKho"));// set Id bien lai kho
                 HopDong dong = new HopDong();
-                dong.setId(rs.getInt(3));
+                dong.setId(rs.getInt("idHopDong"));
                 PhieuThuChi chi = new PhieuThuChi();
-                chi.setIdPhieuThuChi(rs.getInt(4));
+                chi.setIdPhieuThuChi(rs.getInt("idPhieuThuChi"));
                 NhanVien nhanVien = new NhanVien();
-                nhanVien.setId(rs.getInt(5));
+                nhanVien.setId(rs.getInt("idNhanVien"));
                 ///////////////
                 bienLaiNhap.setHopDong(dong);
                 bienLaiNhap.setPhieuThuChi(chi);
                 bienLaiNhap.setNhanVien(nhanVien);
-                bienLaiNhap.setId(rs.getInt(6));
-                bienLaiNhap.setMaBienLai(rs.getString(7));
-                bienLaiNhap.setNgayLap(rs.getString(8));
+                bienLaiNhap.setId(rs.getInt("idBienLaiNhap"));
+                bienLaiNhap.setMaBienLai(rs.getString("maBienLai"));
+                bienLaiNhap.setNgayLap(rs.getString("ngayLap"));
                 Kho k = new Kho();
-                k.setId(rs.getInt(9));
+                k.setId(rs.getInt("idKho"));
                 bienLaiNhap.setKho(k);
                 bienLaiNhap.setSoLuong(rs.getInt(10));
                 listBienLaiNhap.add(bienLaiNhap);
@@ -57,7 +57,12 @@ public class BienLaiNhapDAO extends DAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        
+            try {
+                stm.close();
+
+            } catch (SQLException ex) {
+                //
+            }
         }
         return listBienLaiNhap;
     }
@@ -87,7 +92,6 @@ public class BienLaiNhapDAO extends DAO {
         try {
 
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
-
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             int maxId;
             System.out.println(sql2);
@@ -123,10 +127,11 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
+
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-          
+
             return false;
         }
         return true;
@@ -162,16 +167,14 @@ public class BienLaiNhapDAO extends DAO {
                 ResultSet resultSet = stm.getGeneratedKeys();
                 while (resultSet.next()) {
                     maxId = resultSet.getInt(1);
+                    break;
                 }
             }
-            
-            String sql3 = "select idBienLaiKho from [BienLaiKho]";
-            stm = con.prepareStatement(sql3);
-            rs = stm.executeQuery();
+
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
             System.out.println("maxID" + (maxId));
-            sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
+            String sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
                     + " values(" + idBienLaiKho + maSanPham + gia + hanSuDung + idMatHang + ")";
             String sql = "insert into [BienLaiNhap] (idBienLaiKho,idHopDong,idNhanVien)"
                     + " values(" + idBienLaiKho + idHopDong + idNhanVien + ")";
@@ -184,7 +187,7 @@ public class BienLaiNhapDAO extends DAO {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } 
+        }
         return true;
     }
 
@@ -213,9 +216,9 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-       
+
             return false;
-        } 
+        }
         return true;
     }
 

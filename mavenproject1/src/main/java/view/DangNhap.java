@@ -201,8 +201,16 @@ public class DangNhap extends javax.swing.JFrame {
                 chuyen.setVisible(true);
                 this.dispose();
             }
-            else if (out.getVaiTro().equals("Quản lí kho")){
-                    
+            if (out.getVaiTro().equals("Quản lí kho")) {
+                GDQuanLiKho chuyen =  new GDQuanLiKho(out);
+                chuyen.setVisible(true);
+                this.dispose();
+
+            }
+            if (out.getVaiTro().equals("Kế toán")) {
+                GDKeToan chuyen = new GDKeToan(out);
+                chuyen.setVisible(true);
+                this.dispose();
             }
         }
         else{

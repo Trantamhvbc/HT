@@ -16,7 +16,10 @@ public class DAO {
     protected static Connection con = null;
 
     public DAO() {
+
         if (con == null) {
+
+
             try {
 //                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //                con = DriverManager.getConnection(dbURL, user, pass);

@@ -27,6 +27,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.UIManager;
 import javax.swing.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -66,6 +68,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
     private ArrayList<MatHang> listMatHangSearch = new ArrayList<>();
     private int giaMatHang;
     private ArrayList<RecordSanPham> listMatHangDaChon = new ArrayList<>();
+    Thread updtae;
 
     public GDNhapHangFrm() {
         initComponents();
@@ -76,7 +79,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         addListenerText(jTextFieldDonGia);
         loadThemMatHangDaChon();
         createMatBienLai();
-        loadUpdateDB();
+        //loadUpdateDB();
     }
 
     @Override
@@ -96,7 +99,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
                 while (!exit) {
                     loadDanhSachMH();
                     try {
-                        Thread.sleep(60000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -108,6 +111,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
             }
         };
         run = new Thread(task);
+        this.updtae = run;
         run.start();
     }
 
@@ -1209,13 +1213,19 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
     }//GEN-LAST:event_JButtonThemActionPerformed
 
     private void jButtonThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThanhToanActionPerformed
-        String ngayNhap = ((JTextField) jDateChooserNgayLap.getDateEditor().getUiComponent()).getText();
+         String ngayNhap = ((JTextField) jDateChooserNgayLap.getDateEditor().getUiComponent()).getText();
         System.out.println(nccSelected.getTen() + " ten ncc da chon");
         System.out.println(nvSelected.getHoTen() + " ten nvSelected da chon");
         System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
         String dienGiai = jTextFieldLyDo.getText();
         String ghiChu = jTextFieldGhiChu.getText();
-
+        if (updtae != null) {
+            try {
+                updtae.sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GDNhapHangFrm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
 
         dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -1224,10 +1234,10 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
                 JFrame frame = (JFrame) e.getSource();
 
                 int result = JOptionPane.showConfirmDialog(
-                    frame,
-                    "Có phải bạn muốn đóng cửa sổ này?",
-                    "Exit Application",
-                    JOptionPane.YES_NO_OPTION);
+                        frame,
+                        "Có phải bạn muốn đóng cửa sổ này?",
+                        "Exit Application",
+                        JOptionPane.YES_NO_OPTION);
 
                 if (result == JOptionPane.YES_OPTION) {
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1271,9 +1281,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
     private void jTextField18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField18ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField18ActionPerformed
-
     private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField14ActionPerformed
 
     /**

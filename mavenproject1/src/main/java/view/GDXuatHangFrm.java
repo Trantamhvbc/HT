@@ -131,7 +131,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
                 while (!exit) {
                     loadDanhSachMH();
                     try {
-                        Thread.sleep(60000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
@@ -276,8 +276,6 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
         defaultTableModel.setRowCount(0);
         jTableDanhSachMH.setModel(defaultTableModel);
         jTableDanhSachMH.getColumnModel().getColumn(0).setPreferredWidth(5);
-        jTableDanhSachMH.getColumnModel().getColumn(4).setPreferredWidth(5);
-        jTableDanhSachMH.getColumnModel().getColumn(5).setPreferredWidth(5);
         JTableHeader header = jTableDanhSachMH.getTableHeader();
         header.setResizingAllowed(false);
         jTableDanhSachMH.setFocusable(false);
@@ -1077,7 +1075,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame implements Job {
             check = false;
             JOptionPane.showMessageDialog(null, "Số lượng mặt hàng này trong kho chỉ còn " + soLuongSP + "!", "cảnh báo chọn mặt hàng", JOptionPane.WARNING_MESSAGE);
         }
-       
+
         if (check == true) {
 
             BienLaiXuat bienLaiXuat = new BienLaiXuat();
