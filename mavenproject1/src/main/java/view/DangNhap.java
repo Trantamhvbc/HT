@@ -196,7 +196,7 @@ public class DangNhap extends javax.swing.JFrame {
         NhanVien out = new NhanVienDAO().getNhanVienByAcount(e);
         System.out.println(out.getHoTen());
         if( out.getUserName().equals(e.getUserName()) && out.getPassword().equals(e.getPassword())){
-            if(out.getVaiTro().equals("Bán hàng")){
+            if(out.getVaiTro().equals("Bán Hàng")){
                 GDNhanVienBanHang chuyen =  new GDNhanVienBanHang(out);
                 chuyen.setVisible(true);
                 this.dispose();

@@ -79,7 +79,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         addListenerText(jTextFieldDonGia);
         loadThemMatHangDaChon();
         createMatBienLai();
-        //loadUpdateDB();
+        loadUpdateDB();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         };
         run = new Thread(task);
         this.updtae = run;
-        run.start();
+        updtae.start();
     }
 
     int countDigit(int number) {
