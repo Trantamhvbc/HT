@@ -61,6 +61,28 @@ public class NhanVienDAO extends DAO {
         return res;
     } 
     
+     private NhanVien resultSet2NhanVien(ResultSet rs) throws SQLException {
+        NhanVien nhanVien = new NhanVien();
+        nhanVien.setId(rs.getInt(7));
+        nhanVien.setEmail(rs.getString(10));
+        nhanVien.setNgaySinh(rs.getString(11));
+        nhanVien.setGioiTinh(rs.getString(12));
+        nhanVien.setHocVan(rs.getString(13));
+        nhanVien.setDiaChi(rs.getString(14));
+        nhanVien.setHoTen(rs.getString(15));
+        nhanVien.setIdNhanVien(rs.getInt(1));
+        nhanVien.setVaiTro(rs.getString(2));
+        nhanVien.setUserName(rs.getString(3));
+        nhanVien.setPassword(rs.getString(4));
+        int idBoPhan = rs.getInt(5);
+        int idCuaHang = rs.getInt(6);
+        BoPhan boPhan = boPhanDAO.getBoPhanById(idBoPhan);
+        CuaHang cuaHang = cuaHangDAO.getCuaHangById(idCuaHang);
+        nhanVien.setBoPhan(boPhan);
+        nhanVien.setCuaHang(cuaHang);
+        return nhanVien;
+    }
+    
     public ArrayList<NhanVien> getAllNVBanHang(){
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -147,6 +169,114 @@ public class NhanVienDAO extends DAO {
         return listNhanVien;
         
     }
+    public List<NhanVien> getNhanVienByName(String name) {
+        String sql = "select *  from [CuaHangHoaQua].[dbo].[NhanVien] inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi "
+                + "where Nguoi.hoTen like ?";
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        List<NhanVien> listNV = new ArrayList<>();
+        try {
+            pre = getCon().prepareStatement(sql);
+            pre.setString(1, "%"+name+"%");
+            rs= pre.executeQuery();
+            CachedRowSet cachedRowSet=new CachedRowSetImpl();
+            cachedRowSet.populate(rs);
+            while (cachedRowSet.next()) {
+                NhanVien nhanVien = resultSet2NhanVien(cachedRowSet);
+                listNV.add(nhanVien);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return listNV;
+    }
+      
+    public NhanVien getNhanVienById(int idNhanVien) {
+        String sql = "select * from  [CuaHangHoaQua].[dbo].[NhanVien]  inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where idNhanVien = ?";
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        try {
+            pre = getCon().prepareStatement(sql);
+            pre.setInt(1, idNhanVien);
+            rs = pre.executeQuery();
+            if (rs.next()) {
+                return resultSet2NhanVien(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int insertNV(NhanVien nv) {
+        PreparedStatement pre = null;
+        try {
+            String sql = "insert into [CuaHangHoaQua].[dbo].NhanVien (vaiTro,username,[password],idBoPhan,idCuaHang,idNguoi) "
+                    + "values (?,?,?,?,?,?)";
+            pre = getCon().prepareStatement(sql);
+            pre.setString(1, nv.getVaiTro());
+            pre.setString(2, nv.getUserName());
+            pre.setString(3, nv.getPassword());
+            pre.setInt(4, nv.getBoPhan().getId());
+            pre.setInt(5, nv.getCuaHang().getId());
+            pre.setInt(6, nv.getId());
+            return pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                pre.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return 0;
+    }
+   
+
+    public int deleteNV(NhanVien nv) {
+        PreparedStatement pre = null;
+        int idNV = nv.getIdNhanVien();
+        String sql = "delete from [CuaHangHoaQua].[dbo].[NhanVien] WHERE idNhanVien = " + idNV + ";";
+        try {
+            pre = getCon().prepareStatement(sql);
+            return pre.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                pre.close();
+                getCon().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
+    }
+
+    public int updateVaiTroVaBoPhan(NhanVien nhanVien) {
+        PreparedStatement preparedStmt = null;
+        try {
+            String query = "update [CuaHangHoaQua].[dbo].[NhanVien] set vaiTro= ?, idBoPhan = ? where idNhanVien = ?";
+            preparedStmt = getCon().prepareStatement(query);
+            preparedStmt.setString(1, nhanVien.getVaiTro());
+            preparedStmt.setInt(2, nhanVien.getBoPhan().getId());
+            preparedStmt.setInt(3, nhanVien.getIdNhanVien());
+            return preparedStmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                preparedStmt.close();
+                getCon().close();
+            } catch (SQLException ex) {
+                Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
+    }
+    
     public ArrayList<NhanVien> getAllNVKho(){
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -231,11 +361,6 @@ public class NhanVienDAO extends DAO {
         }
         return listNhanVien;
     }
-//    public static void main(String[] args) {
-//        NhanVien e =  new NhanVien();
-//        e.setUserName("xuan");
-//        e.setPassword("1");
-//        NhanVien out = new NhanVienDAO().getNhanVienByAcount(e);
-//        System.out.println(out.getHoTen());
-//    }
+
+    
 }
