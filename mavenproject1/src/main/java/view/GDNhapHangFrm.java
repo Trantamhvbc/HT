@@ -79,7 +79,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         addListenerText(jTextFieldDonGia);
         loadThemMatHangDaChon();
         createMatBienLai();
-        //loadUpdateDB();
+       loadUpdateDB();
     }
 
     @Override
@@ -1219,13 +1219,13 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
         String dienGiai = jTextFieldLyDo.getText();
         String ghiChu = jTextFieldGhiChu.getText();
-        if (updtae != null) {
-            try {
-                updtae.sleep(10000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GDNhapHangFrm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        if (updtae != null) {
+//            try {
+//                updtae.sleep(10000);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(GDNhapHangFrm.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
         GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected, this.maBienLai, dienGiai, ghiChu);
 
         dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
