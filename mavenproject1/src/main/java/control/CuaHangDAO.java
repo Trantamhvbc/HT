@@ -71,4 +71,21 @@ public class CuaHangDAO extends DAO {
         } 
         return listCuaHang;
     }
+    
+    public int getIdCuaHang(){
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int idCuaHang = 0;
+        String sql = "select *  from [CuaHangHoaQua].[dbo].[CuaHang]";
+        try {
+            stm = getCon().prepareStatement(sql);
+            rs = stm.executeQuery();
+            while(rs.next()){
+                idCuaHang = rs.getInt(1);
+            }  
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return idCuaHang;
+    }
 }

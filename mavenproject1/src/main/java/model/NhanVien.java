@@ -8,6 +8,9 @@
  * @author Duong
  */
 package model;
+
+import java.util.Objects;
+
 public class NhanVien extends Nguoi{
     private int idNhanVien;
     private String vaiTro;
@@ -19,6 +22,24 @@ public class NhanVien extends Nguoi{
     public NhanVien() {
     }
 
+     public NhanVien(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+   
+    public NhanVien(int idNhanVien, String vaiTro, String userName, String password, BoPhan boPhan, CuaHang cuaHang) {
+        this.idNhanVien = idNhanVien;
+        this.vaiTro = vaiTro;
+        this.userName = userName;
+        this.password = password;
+        this.boPhan = boPhan;
+        this.cuaHang = cuaHang;
+    }
+
+    public NhanVien(int idNhanVien) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     public int getIdNhanVien() {
         return idNhanVien;
     }
@@ -67,6 +88,26 @@ public class NhanVien extends Nguoi{
         this.cuaHang = cuaHang;
     }
     
-    
+    @Override
+    public String toString() {
+        return "NhanVien{" + "idNhanVien=" + idNhanVien + ", vaiTro=" + vaiTro + ", userName=" + userName + ", password=" + password + ", boPhan=" + boPhan + ", cuaHang=" + cuaHang + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NhanVien)) return false;
+        NhanVien nhanVien = (NhanVien) o;
+        return getIdNhanVien() == nhanVien.getIdNhanVien() &&
+                Objects.equals(getVaiTro(), nhanVien.getVaiTro()) &&
+                Objects.equals(getUserName(), nhanVien.getUserName()) &&
+                Objects.equals(getBoPhan(), nhanVien.getBoPhan()) &&
+                Objects.equals(getCuaHang(), nhanVien.getCuaHang());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdNhanVien(), getVaiTro(), getUserName(), getBoPhan(), getCuaHang());
+    }
     
 }
