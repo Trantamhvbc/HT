@@ -1302,7 +1302,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
     }//GEN-LAST:event_jTextField18ActionPerformed
     private void jTextField14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField14ActionPerformed
     }//GEN-LAST:event_jTextField14ActionPerformed
->>>>>>> 347c2577ec09ff6b446c754b63e53786b92931ad
 
     /**
      * @param args the command line arguments
