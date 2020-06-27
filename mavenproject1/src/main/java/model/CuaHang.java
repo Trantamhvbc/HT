@@ -15,6 +15,10 @@ public class CuaHang {
     private ChiNhanh chiNhanh;
     private String diaChi;
 
+    public CuaHang(int id) {
+        this.id = id;
+    }
+
     public String getDiaChi() {
         return diaChi;
     }
@@ -22,6 +26,7 @@ public class CuaHang {
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
+    
     public CuaHang() {
     }
 

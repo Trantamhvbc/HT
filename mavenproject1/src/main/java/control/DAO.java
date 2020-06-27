@@ -33,6 +33,21 @@ public class DAO {
     public Connection getCon() {
         return con;
     }
+    
+//     public Connection getCon() {
+//        try {
+//            if (con.isClosed()) {
+//                try {
+//                    con = HikariCPDataSource.getConnection();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return con;
+//    }
 
     public static void main(String[] args) {
         DAO dao = new DAO();

@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Duong
@@ -40,6 +42,25 @@ public class BoPhan {
     public void setCongTy(CongTy congTy) {
         this.congTy = congTy;
     }
-     
+    
+    @Override
+    public String toString() {
+        return getTen();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BoPhan)) return false;
+        BoPhan boPhan = (BoPhan) o;
+        return getId() == boPhan.getId() &&
+                Objects.equals(getTen(), boPhan.getTen()) &&
+                Objects.equals(getCongTy(), boPhan.getCongTy());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTen(), getCongTy());
+    }  
      
 }

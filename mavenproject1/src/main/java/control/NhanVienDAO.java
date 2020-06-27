@@ -5,14 +5,16 @@
  */
 package control;
 
+import com.sun.rowset.CachedRowSetImpl;
 import static control.DAO.con;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sql.rowset.CachedRowSet;
 import model.*;
 
 /**
@@ -20,10 +22,17 @@ import model.*;
  * @author Duong
  */
 public class NhanVienDAO extends DAO {
-
+    private final NguoiDAO nguoiDAO;
+    private final BoPhanDAO boPhanDAO;
+    private final CuaHangDAO cuaHangDAO;
+    
     public NhanVienDAO() {
         super();
+        nguoiDAO = new NguoiDAO();
+        boPhanDAO = new BoPhanDAO();
+        cuaHangDAO = new CuaHangDAO();
     }
+    
     public  NhanVien getNhanVienByAcount(NhanVien e){
         NhanVien res = new NhanVien();
         res.setPassword("");
@@ -169,6 +178,7 @@ public class NhanVienDAO extends DAO {
         return listNhanVien;
         
     }
+    
     public List<NhanVien> getNhanVienByName(String name) {
         String sql = "select *  from [CuaHangHoaQua].[dbo].[NhanVien] inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi "
                 + "where Nguoi.hoTen like ?";
@@ -247,7 +257,6 @@ public class NhanVienDAO extends DAO {
         } finally {
             try {
                 pre.close();
-                getCon().close();
             } catch (SQLException ex) {
                 Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -269,7 +278,6 @@ public class NhanVienDAO extends DAO {
         } finally {
             try {
                 preparedStmt.close();
-                getCon().close();
             } catch (SQLException ex) {
                 Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
