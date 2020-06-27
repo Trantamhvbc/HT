@@ -38,8 +38,7 @@ public class HopDong2DAO extends DAO {
         String ngayKi = "'" + hopDong.getNgayKi() + "',";
         String denNgay = "'" + hopDong.getDenNGay() + "',";
         String idNhanVien = "N'" + hopDong.getNv().getIdNhanVien() + "'";
-        String idNhaCungCap = "N'" + hopDong.getNcc().getId() + "'";
-        
+        String idNhaCungCap;
         
         
 
@@ -54,24 +53,25 @@ public class HopDong2DAO extends DAO {
         
         
         try {
-            String sql2 = "insert into [NhaCungCap] (maNhaCungCap,ten,email,sdt)"
-                    + " values(" + maNhaCungCap + ten + email + sdt + ")";
+            String sql2 = "insert into [NhaCungCap] (ten,email,sodienthoai)"
+                    + " values("   +ten + email + sdt + ")";
             System.out.println(sql2);
+            System.out.println(con);
             stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
             int maxId=stm.executeUpdate();
             if(maxId>0){
                 ResultSet resultSet=stm.getGeneratedKeys();
                 while(resultSet.next()){
                     maxId=resultSet.getInt(1);
+                   
                 }
             }
             idNhaCungCap= "'" + (maxId) + "',";
-            String sql = "insert into [HoaDon] (idNhaCungCap,tenHopDong,ngayKi,denNgay,idNhanVien)"
+            String sql = "insert into [HopDong] (idNhaCungCap,tenHopDong,ngayKi,denNgay,idNhanVien)"
                     + " values(" + idNhaCungCap + tenHopDong + ngayKi + denNgay + maNhanVien +  ")";
          
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            con.commit();
         } catch (Exception e) {
             e.printStackTrace();
             try {

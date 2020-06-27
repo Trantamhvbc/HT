@@ -5,6 +5,8 @@
  */
 package view;
 
+import control.HopDong2DAO;
+import control.HopDongDAO;
 import control.MatHangDAO;
 import control.NhaCungCap1DAO;
 import control.NhanVienDAO;
@@ -31,6 +33,7 @@ import javax.swing.event.DocumentListener;
 import model.MatHang;
 import model.NhaCungCap;
 import model.NhanVien;
+import model.HopDong;
 
 /**
  *
@@ -50,11 +53,10 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
 
     public GDThemNhaCungCap() {
         initComponents();
-        
+         loadNV();
         createNhaCungCap();
         addActionListenerButton(jButtonLuu);
     }
-
     void addActionListenerButton(JButton button) {
         button.addActionListener(new ActionListener() {
             @Override
@@ -235,8 +237,6 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jButtonLuu2 = new javax.swing.JButton();
         jComboBoxNhanVien = new javax.swing.JComboBox<>();
-        jLabel12 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -300,12 +300,13 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
         });
 
         jButtonLuu2.setText("Lưu hợp đồng");
+        jButtonLuu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLuu2ActionPerformed(evt);
+            }
+        });
 
         jComboBoxNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel12.setText("Nhà cung cấp");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -327,10 +328,10 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(60, 60, 60)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldSdt, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldSdt)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextFieldMa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 132, Short.MAX_VALUE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(jTextFieldEmail)
                                     .addComponent(jTextFieldTen))
                                 .addGap(226, 226, 226))))
@@ -350,18 +351,16 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel10))
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jTextFieldMaHD, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                                 .addComponent(jTextFieldTenHD)
                                 .addComponent(jTextFieldNgayKiHD)
                                 .addComponent(jTextFieldDenNgayHD)))))
-                .addGap(864, 864, 864))
+                .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,11 +401,7 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jTextFieldDenNgayHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
@@ -415,7 +410,7 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
                     .addComponent(jButtonLuu)
                     .addComponent(jLabel11)
                     .addComponent(jButtonLuu2))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         pack();
@@ -445,6 +440,22 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLuuActionPerformed
 
+    private void jButtonLuu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLuu2ActionPerformed
+            HopDong2DAO dongDAO=new HopDong2DAO();
+            HopDong hd=new HopDong();
+            hd.setDenNGay(jTextFieldDenNgayHD.getText());
+            hd.setNv(nvSelected);
+            hd.setNgayKi(jTextFieldNgayKiHD.getText());
+            hd.setTenHopDong(jTextFieldTenHD.getText());
+            NhaCungCap ncc=new NhaCungCap();
+            ncc.setEmail(jTextFieldEmail.getText());
+            ncc.setSodienthoai(jTextFieldSdt.getText());
+            ncc.setTen(jTextFieldTen.getText());
+            dongDAO.themHopDong(hd,ncc,nvSelected);
+            JOptionPane.showMessageDialog(null, "Thêm hợp đồng thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonLuu2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -471,12 +482,10 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonLuu;
     private javax.swing.JButton jButtonLuu2;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBoxNhanVien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
