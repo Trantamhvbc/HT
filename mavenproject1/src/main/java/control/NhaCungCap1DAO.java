@@ -41,14 +41,7 @@ public class NhaCungCap1DAO extends DAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-                con.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return listNhaCC;
     }
     public boolean themNhaCungCap(NhaCungCap ncc) {

@@ -10,12 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import model.BienLaiNhap;
-import model.SanPham;
-import model.BienLaiXuat;
-import model.HopDong;
-import model.NhaCungCap;
-import model.NhanVien;
+import java.util.ArrayList;
+import model.*;
 
 /**
  *
@@ -27,55 +23,43 @@ public class HopDong2DAO extends DAO {
         super();
     }
 
-    public boolean themHopDong(HopDong hopDong, NhaCungCap nhaCungCap, NhanVien nhanVien ) {
+    public boolean themHopDong(HopDong hopDong, NhaCungCap nhaCungCap, NhanVien nhanVien) {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String idHopDong;
-        System.out.println("HopDong" + hopDong);
-        
-        
-        String tenHopDong = "'" + hopDong.getTenHopDong()+ "',";
+        String tenHopDong = "'" + hopDong.getTenHopDong() + "',";
         String ngayKi = "'" + hopDong.getNgayKi() + "',";
         String denNgay = "'" + hopDong.getDenNGay() + "',";
-        String idNhanVien = "N'" + hopDong.getNv().getIdNhanVien() + "'";
-        String idNhaCungCap;
-        
-        
+        String idNhanVien = "'" + hopDong.getNv().getIdNhanVien() + "',";
 
         String maNhanVien = "'" + nhanVien.getIdNhanVien() + "',";
 
-        
-        String maNhaCungCap = "'" + nhaCungCap.getId() + "',";
-        String ten = "'" + nhaCungCap.getTen()+ "',";
-        String email = "'" + nhaCungCap.getEmail()+ "',";
-        String sdt = "'" + nhaCungCap.getSodienthoai()+ "'";
+        String ten = "N'" + nhaCungCap.getTen() + "',";
+        String email = "N'" + nhaCungCap.getEmail() + "',";
+        String sdt = "N'" + nhaCungCap.getSodienthoai() + "'";
 
-        
-        
         try {
             String sql2 = "insert into [NhaCungCap] (ten,email,sodienthoai)"
-                    + " values("   +ten + email + sdt + ")";
-            System.out.println(sql2);
-            System.out.println(con);
-            stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
+                    + " values (" + ten + email + sdt + ")";
+            String sql="insert into nhacungcap (ten,email,sodienthoai) values ('a','b','c')";
+            stm = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             int maxId=stm.executeUpdate();
-            if(maxId>0){
-                ResultSet resultSet=stm.getGeneratedKeys();
-                while(resultSet.next()){
-                    maxId=resultSet.getInt(1);
-                   
+            if (maxId > 0) {
+                ResultSet resultSet = stm.getGeneratedKeys();
+                while (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                    break;
+
                 }
             }
-            idNhaCungCap= "'" + (maxId) + "',";
-            String sql = "insert into [HopDong] (idNhaCungCap,tenHopDong,ngayKi,denNgay,idNhanVien)"
-                    + " values(" + idNhaCungCap + tenHopDong + ngayKi + denNgay + maNhanVien +  ")";
-         
-            stm = con.prepareStatement(sql);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            
+            String idNhaCungCap="'" + maxId + "'";
+            String sql3 = "insert into HopDong (tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) "
+                    + "values (" + tenHopDong +ngayKi+denNgay+idNhanVien+idNhaCungCap+ ")";
+
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
-        } 
+        }
         return true;
     }
 }

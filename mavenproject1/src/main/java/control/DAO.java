@@ -57,13 +57,11 @@ public class DAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String sql2 = "select * from taikhoan";
+        String sql1="insert into nhacungcap (ten,email,sodienthoai) values ('a','b','c')";
         try {
             con = HikariCPDataSource.getConnection();
-            stm = con.prepareStatement(sql2);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                System.out.println("id:\t" + rs.getString(1));
-            }
+            stm = con.prepareStatement(sql1);
+            stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
         }

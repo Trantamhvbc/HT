@@ -44,19 +44,15 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
     /**
      * Creates new form GDThemNhaCungCap
      */
-
     ArrayList<NhaCungCap> listNhaCungCap;
     private ArrayList<NhanVien> listNV;
     private NhanVien nvSelected;
-       
-
 
     public GDThemNhaCungCap() {
         initComponents();
-         loadNV();
+        loadNV();
         createNhaCungCap();
     }
-    
 
     int countDigit(int number) {
         int count = 0;
@@ -68,8 +64,8 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
     }
 
     void createNhaCungCap() {
-        
-        NhaCungCap1DAO nccDao = new NhaCungCap1DAO();       
+
+        NhaCungCap1DAO nccDao = new NhaCungCap1DAO();
         listNhaCungCap = nccDao.getAllNhaCungCap();
         int count = countDigit(listNhaCungCap.size() + 1);
         String maNCC = "DTE-";
@@ -81,65 +77,7 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
         maNCC = maNCC + "" + listNhaCungCap.size();
         jTextFieldMa.setText(maNCC);
     }
-   
 
-    void addListenerText(JTextField field) {
-        field.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                warn();
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                warn();
-            }
-
-            public void insertUpdate(DocumentEvent e) {
-                warn();
-            }
-
-            public void warn() {
-
-            }
-        });
-        field.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                field.setText("");
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                try {
-                    DecimalFormat df = new DecimalFormat("#,##0");
-                    String s = df.format(new BigDecimal(field.getText()));
-                    field.setText(s);
-                } catch (Exception e2) {
-                    JOptionPane.showMessageDialog(field, "Only numbers are allowed", "Warning", JOptionPane.WARNING_MESSAGE);
-                    e2.printStackTrace();
-                    field.setText("");
-                }
-            }
-        });
-
-        field.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
-        });
-    }   
-    
-    
     // tải dữ liệu nhân viên kho từ cơ sở dữ liệu
     void loadNV() {
         jComboBoxNhanVien.removeAllItems();
@@ -156,19 +94,11 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
             public void itemStateChanged(ItemEvent e) {
                 JComboBox comboBoxTest = (JComboBox) e.getSource();
                 int stt = comboBoxTest.getSelectedIndex();
-                if (stt != -1) {
                     nvSelected = listNV.get(stt);
-                }
             }
         });
     }
-    
-    
-    
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -405,27 +335,27 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLuuActionPerformed
 
     private void jButtonLuu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLuu2ActionPerformed
-            HopDong2DAO dongDAO=new HopDong2DAO();
-            HopDong hd=new HopDong();
-            hd.setDenNGay(jTextFieldDenNgayHD.getText());
-            hd.setNv(nvSelected);
-            hd.setNgayKi(jTextFieldNgayKiHD.getText());
-            hd.setTenHopDong(jTextFieldTenHD.getText());
-            NhaCungCap ncc=new NhaCungCap();
-            ncc.setEmail(jTextFieldEmail.getText());
-            ncc.setSodienthoai(jTextFieldSdt.getText());
-            ncc.setTen(jTextFieldTen.getText());
-            dongDAO.themHopDong(hd,ncc,nvSelected);
-            JOptionPane.showMessageDialog(null, "Thêm hợp đồng thành công","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+        HopDong2DAO dongDAO = new HopDong2DAO();
+        
+        HopDong hd = new HopDong();
+        hd.setDenNGay(jTextFieldDenNgayHD.getText());
+        hd.setNv(nvSelected);
+        hd.setNgayKi(jTextFieldNgayKiHD.getText());
+        hd.setTenHopDong(jTextFieldTenHD.getText());
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setEmail(jTextFieldEmail.getText());
+        ncc.setSodienthoai(jTextFieldSdt.getText());
+        ncc.setTen(jTextFieldTen.getText());
+        dongDAO.themHopDong(hd, ncc, nvSelected);
+        JOptionPane.showMessageDialog(null, "Thêm hợp đồng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLuu2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-   
-     public static void main(String args[]) {
-       
+    public static void main(String args[]) {
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -441,7 +371,7 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonLuu;
@@ -468,8 +398,5 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldTen;
     private javax.swing.JTextField jTextFieldTenHD;
     // End of variables declaration//GEN-END:variables
-    
-}
-    
 
-    
+}

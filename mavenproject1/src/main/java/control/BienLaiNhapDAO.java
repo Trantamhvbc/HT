@@ -22,7 +22,45 @@ public class BienLaiNhapDAO extends DAO {
     public BienLaiNhapDAO() {
         super();
     }
+public boolean themHopDong(HopDong hopDong, NhaCungCap nhaCungCap, NhanVien nhanVien) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String idHopDong;
+        String tenHopDong = "'" + hopDong.getTenHopDong() + "',";
+        String ngayKi = "'" + hopDong.getNgayKi() + "',";
+        String denNgay = "'" + hopDong.getDenNGay() + "',";
+        String idNhanVien = "N'" + hopDong.getNv().getIdNhanVien() + "',";
 
+        String maNhanVien = "'" + nhanVien.getIdNhanVien() + "',";
+
+        String maNhaCungCap = "'" + nhaCungCap.getId() + "',";
+        String ten = "N'" + nhaCungCap.getTen() + "',";
+        String email = "N'" + nhaCungCap.getEmail() + "',";
+        String sdt = "N'" + nhaCungCap.getSodienthoai() + "'";
+
+        try {
+            String sql2 = "insert into [NhaCungCap] (ten,email,sodienthoai)"
+                    + " values (" + ten + email + sdt + ")";
+            stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
+            int maxId=stm.executeUpdate();
+            if (maxId > 0) {
+                ResultSet resultSet = stm.getGeneratedKeys();
+                while (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                    break;
+
+                }
+            }
+            String idNhaCungCap="'" + maxId + "'";
+            String sql3 = "insert into HopDong (tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) "
+                    + "values (" + tenHopDong +ngayKi+denNgay+idNhanVien+idNhaCungCap+ ")";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
     public ArrayList<BienLaiNhap> getAllBienLaiNhap() {
         PreparedStatement stm = null;
         ResultSet rs = null;

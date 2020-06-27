@@ -49,4 +49,5 @@ public class NhaCungCapDAO extends DAO {
         }
         return listNhaCC;
     }
+    
 }
