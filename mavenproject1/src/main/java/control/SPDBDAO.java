@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.MatHang;
 import model.RecordSanPham;
+import model.RecordSoLuongBLX;
 import model.SanPham;
 
 /**
@@ -51,10 +52,21 @@ public class SPDBDAO extends DAO{
     public ArrayList <RecordSanPham> getAllSanPhamTrenCuaHang(){
         ArrayList<RecordSanPham> res =  new ArrayList();
         String sql = "select MatHang.*,SanPham.*, BienLaiKho.soLuong from  [MatHang],[SanPham] ,\n" +
-                "[BienLaiKho] , [BienLaiXuat] WHERE SanPham.idBienLaiKho = BienLaiKho.idBienLaiKho \n" +
-                "and MatHang.idMatHang = SanPham.idMatHang and BienLaiKho.idBienLai Kho = BienLaiXuat.idBienLaiKho and BienLaiKho.soLuong > 0";
+                "[BienLaiKho]  WHERE SanPham.idBienLaiKho = BienLaiKho.idBienLaiKho \n" +
+                "and MatHang.idMatHang = SanPham.idMatHang";
+         String sql2 = "select sum(tiLeThue) as tongSoLuongXuat, idBienLaiKho from BienLaiXuat group by idBienLaiKho";
+        ArrayList<RecordSanPham> listMHTrongKho = new ArrayList<RecordSanPham>();
+        
         try {
-            
+            PreparedStatement stm = con.prepareStatement(sql2);
+            ResultSet rs2 = stm.executeQuery();
+            ArrayList<RecordSoLuongBLX> listTongXuat = new ArrayList<>();
+            while (rs2.next()) {
+                RecordSoLuongBLX recordSoLuongBLX = new RecordSoLuongBLX();
+                recordSoLuongBLX.setIdBienLaiKho(rs2.getInt("idBienLaiKho"));
+                recordSoLuongBLX.setSoLuong(rs2.getInt("tongSoLuongXuat"));
+                listTongXuat.add(recordSoLuongBLX);
+            }
             PreparedStatement prstm = con.prepareStatement(sql);
             ResultSet result = prstm.executeQuery();
             while(result.next()){
@@ -68,10 +80,21 @@ public class SPDBDAO extends DAO{
                sp.setIdSanPham(result.getInt("idSanPham") );
                sp.setGia(result.getInt("gia"));
                sp.setHanSuDung(result.getString("hanSuDung"));
-               int hienco = result.getInt("soLuong");
+               //int hienco = result.getInt("soLuong");
+               int hienco=0;
+                int idBienLaiKho=result.getInt("idBienLaiKho");
+                int tongXuat = 0;
+                for (int i = 0; i < listTongXuat.size(); i++) {
+                    int id = listTongXuat.get(i).getIdBienLaiKho();
+                    if (idBienLaiKho ==id) {
+                        hienco = listTongXuat.get(i).getSoLuong();
+                        i = listTongXuat.size();
+                    }
+                }
                int tongHienCo = getTongSoLuongSPDB(sp, hienco) ;
                if(tongHienCo > 0){
-                    RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, tongHienCo));
+                    //RecordSanPham rcsp = new RecordSanPham(sp, getTongSoLuongSPDB(sp, tongHienCo));
+                    RecordSanPham rcsp = new RecordSanPham(sp, tongHienCo);
                     res.add(rcsp);
                }
             }
@@ -85,7 +108,7 @@ public class SPDBDAO extends DAO{
     }
     public int insertRecorpSanPham(RecordSanPham rs,int idHoaDon){
         try {
-            String sql = "INSERT INTO [CuaHangHoaQua2].dbo.SPDB (idHoaDonBanHang,idSanPham,soLuong) VALUES (?,?,?)";
+            String sql = "INSERT INTO SPDB (idHoaDonBanHang,idSanPham,soLuong) VALUES (?,?,?)";
             
             PreparedStatement prstm = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             prstm.setInt(1,idHoaDon );

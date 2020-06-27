@@ -41,8 +41,7 @@ public class HopDong2DAO extends DAO {
         try {
             String sql2 = "insert into [NhaCungCap] (ten,email,sodienthoai)"
                     + " values (" + ten + email + sdt + ")";
-            String sql="insert into nhacungcap (ten,email,sodienthoai) values ('a','b','c')";
-            stm = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
             int maxId=stm.executeUpdate();
             if (maxId > 0) {
                 ResultSet resultSet = stm.getGeneratedKeys();
@@ -55,6 +54,8 @@ public class HopDong2DAO extends DAO {
             String idNhaCungCap="'" + maxId + "'";
             String sql3 = "insert into HopDong (tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) "
                     + "values (" + tenHopDong +ngayKi+denNgay+idNhanVien+idNhaCungCap+ ")";
+            stm=con.prepareStatement(sql3);
+            stm.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

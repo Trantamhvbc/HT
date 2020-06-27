@@ -336,7 +336,6 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
 
     private void jButtonLuu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLuu2ActionPerformed
         HopDong2DAO dongDAO = new HopDong2DAO();
-        
         HopDong hd = new HopDong();
         hd.setDenNGay(jTextFieldDenNgayHD.getText());
         hd.setNv(nvSelected);
@@ -350,7 +349,6 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Thêm hợp đồng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonLuu2ActionPerformed
-
     /**
      * @param args the command line arguments
      */

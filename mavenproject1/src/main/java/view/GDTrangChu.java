@@ -45,6 +45,7 @@ public class GDTrangChu extends javax.swing.JFrame {
         jButtonCongNo = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButtonBanLe = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -176,6 +177,15 @@ public class GDTrangChu extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_agreement_18px_2.png"))); // NOI18N
+        jButton1.setText("Hợp đồng");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -183,15 +193,24 @@ public class GDTrangChu extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonBanLe, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButtonBanLe});
+
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonBanLe)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jButtonBanLe))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
+
+        jPanel4Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButtonBanLe});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -245,29 +264,6 @@ public class GDTrangChu extends javax.swing.JFrame {
         dCongNoFrm.setLocationRelativeTo(null);
         dCongNoFrm.setVisible(true);
     }//GEN-LAST:event_jButtonCongNoActionPerformed
-
-    private void jButtonBanLeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBanLeActionPerformed
-        GDBanHang dQLPhieuThuChi = new GDBanHang();
-        dQLPhieuThuChi.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        dQLPhieuThuChi.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                JFrame frame = (JFrame) e.getSource();
-
-                int result = JOptionPane.showConfirmDialog(
-                        frame,
-                        "Có phải bạn muốn đóng cửa sổ này?",
-                        "Exit Application",
-                        JOptionPane.YES_NO_OPTION);
-
-                if (result == JOptionPane.YES_OPTION) {
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                }
-            }
-        });
-        dQLPhieuThuChi.pack();
-        dQLPhieuThuChi.setLocationRelativeTo(null);
-        dQLPhieuThuChi.setVisible(true);
-    }//GEN-LAST:event_jButtonBanLeActionPerformed
 
     private void jButtonNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNhapHangActionPerformed
 
@@ -340,6 +336,52 @@ public class GDTrangChu extends javax.swing.JFrame {
         dTonQuy.setVisible(true);
     }//GEN-LAST:event_jButtonTonQuyActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GDThemNhaCungCap dThemNhaCungCap = new GDThemNhaCungCap();
+        dThemNhaCungCap.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        dThemNhaCungCap.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                JFrame frame = (JFrame) e.getSource();
+
+                int result = JOptionPane.showConfirmDialog(
+                        frame,
+                        "Có phải bạn muốn đóng cửa sổ này?",
+                        "Exit Application",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+            }
+        });
+        dThemNhaCungCap.pack();
+        dThemNhaCungCap.setLocationRelativeTo(null);
+        dThemNhaCungCap.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonBanLeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBanLeActionPerformed
+//        GDBanHang dQLPhieuThuChi = new GDBanHang();
+//        dQLPhieuThuChi.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//        dQLPhieuThuChi.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {
+//                JFrame frame = (JFrame) e.getSource();
+//
+//                int result = JOptionPane.showConfirmDialog(
+//                    frame,
+//                    "Có phải bạn muốn đóng cửa sổ này?",
+//                    "Exit Application",
+//                    JOptionPane.YES_NO_OPTION);
+//
+//                if (result == JOptionPane.YES_OPTION) {
+//                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//                }
+//            }
+//        });
+//        dQLPhieuThuChi.pack();
+//        dQLPhieuThuChi.setLocationRelativeTo(null);
+//        dQLPhieuThuChi.setVisible(true);
+    }//GEN-LAST:event_jButtonBanLeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -383,6 +425,7 @@ public class GDTrangChu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonBanLe;
     private javax.swing.JButton jButtonCongNo;

@@ -63,18 +63,6 @@ public class GDBanHang extends javax.swing.JFrame {
     private int tienHang = 0;
     private int tongtien = 0;
     private GDNhanVienBanHang back;
-
-    public GDBanHang() {
-        initComponents();
-        Kho kho = new Kho();
-        kho.setId(1);
-        loadSanPham(kho);
-        loadNV();
-        jTextFieldSoHD.setText(createMatBienLai());
-        hoadonDonBanHang = new HoaDonBanHang();
-        loadSanPhamDaChon();
-    }
-
     public GDBanHang(NhanVien e, int tongtien, GDNhanVienBanHang back) {
         initComponents();
         Kho kho = new Kho();
@@ -89,7 +77,36 @@ public class GDBanHang extends javax.swing.JFrame {
         loadSanPhamDaChon();
         loadTongTien();
         loadChoseDay();
+        loadUpdateDB();
 
+    }
+
+    void loadUpdateDB() {
+        Thread run;
+        Runnable task = null;
+        run = new Thread(task);
+        task = new Runnable() {
+            boolean exit = false;
+
+            @Override
+            public void run() {
+                while (!exit) {
+                    loadSanPham();
+
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+            public void stop() {
+                exit = true;
+            }
+        };
+        run = new Thread(task);
+        run.start();
     }
 
     @Override
@@ -141,7 +158,9 @@ public class GDBanHang extends javax.swing.JFrame {
     }
 
     void loadSanPham() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Sản Phẩm", "Tiền Mặt Hàng", "số lượng", "1", "?", "?"}, 0);
+        SPDBDAO spdao = new SPDBDAO();
+        listSanPham2 = spdao.getAllSanPhamTrenCuaHang();
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Sản Phẩm", "Tiền Mặt Hàng", "Gia", "HSD", "DVT", "soLuong"}, 0);
         defaultTableModel.setRowCount(0);
         jTableSanPham.setModel(defaultTableModel);
         jTableSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);
@@ -231,8 +250,8 @@ public class GDBanHang extends javax.swing.JFrame {
         defaultTableModel.fireTableDataChanged();
     }
 
-    public void loadChoseDay(){ 
-        Date date = new Date(); 
+    public void loadChoseDay() {
+        Date date = new Date();
 
         jDateChooserNgayLap.setDate(date);
     }
