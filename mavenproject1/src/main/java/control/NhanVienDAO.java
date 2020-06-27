@@ -5,7 +5,6 @@
  */
 package control;
 
-import com.sun.rowset.CachedRowSetImpl;
 import static control.DAO.con;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -180,7 +179,7 @@ public class NhanVienDAO extends DAO {
     }
     
     public List<NhanVien> getNhanVienByName(String name) {
-        String sql = "select *  from [CuaHangHoaQua].[dbo].[NhanVien] inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi "
+        String sql = "select *  from [NhanVien] inner join [Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi "
                 + "where Nguoi.hoTen like ?";
         PreparedStatement pre = null;
         ResultSet rs = null;
@@ -189,10 +188,9 @@ public class NhanVienDAO extends DAO {
             pre = getCon().prepareStatement(sql);
             pre.setString(1, "%"+name+"%");
             rs= pre.executeQuery();
-            CachedRowSet cachedRowSet=new CachedRowSetImpl();
-            cachedRowSet.populate(rs);
-            while (cachedRowSet.next()) {
-                NhanVien nhanVien = resultSet2NhanVien(cachedRowSet);
+            
+            while (rs.next()) {
+                NhanVien nhanVien = resultSet2NhanVien(rs);
                 listNV.add(nhanVien);
             }
         } catch (SQLException ex) {
@@ -202,7 +200,7 @@ public class NhanVienDAO extends DAO {
     }
       
     public NhanVien getNhanVienById(int idNhanVien) {
-        String sql = "select * from  [CuaHangHoaQua].[dbo].[NhanVien]  inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where idNhanVien = ?";
+        String sql = "select * from  [NhanVien]  inner join [Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where idNhanVien = ?";
         PreparedStatement pre = null;
         ResultSet rs = null;
         try {
@@ -267,7 +265,7 @@ public class NhanVienDAO extends DAO {
     public int updateVaiTroVaBoPhan(NhanVien nhanVien) {
         PreparedStatement preparedStmt = null;
         try {
-            String query = "update [CuaHangHoaQua].[dbo].[NhanVien] set vaiTro= ?, idBoPhan = ? where idNhanVien = ?";
+            String query = "update [NhanVien] set vaiTro= ?, idBoPhan = ? where idNhanVien = ?";
             preparedStmt = getCon().prepareStatement(query);
             preparedStmt.setString(1, nhanVien.getVaiTro());
             preparedStmt.setInt(2, nhanVien.getBoPhan().getId());
