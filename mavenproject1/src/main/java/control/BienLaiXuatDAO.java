@@ -27,17 +27,16 @@ public class BienLaiXuatDAO extends DAO {
     public boolean themBienLaiXuat(BienLaiXuat bienLaiXuat, SanPham pham) {
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String idBienLaiKho;
         System.out.println("BienLaiXuat" + bienLaiXuat);
         String idBienLaiXuat = "'" + bienLaiXuat.getIdBienLaiXuat() + "',";
-        String tiLeThue = "'" + bienLaiXuat.getTiLeThue() + "',";
+        String tiLeThue = "'" + bienLaiXuat.getTiLeThue() + "',";// day la so luong xuat
         String tiLeLai = "'" + bienLaiXuat.getTiLeLai() + "'";
         String idCuaHang = "'" + bienLaiXuat.getCuaHang().getId() + "',";
         String idNhanVien = "'" + bienLaiXuat.getNv().getIdNhanVien()+ "',";
-
+        String idBienLaiKho="'" + bienLaiXuat.getId()+ "',";
         String maBienLaiKho = "'" + bienLaiXuat.getMaBienLai() + "',";
         String ngayLap = "N'" + bienLaiXuat.getNgayLap() + "',";
-        String soLuong = "N'" + bienLaiXuat.getSoLuong() + "',";
+        String soLuong = "'" + bienLaiXuat.getSoLuong() + "',";
         String idKho = "N'" + bienLaiXuat.getKho().getId() + "',";
         String tongTien = "N'" + bienLaiXuat.getTongCong() + "'";
         ////////////////////////--------SanPham
@@ -49,52 +48,18 @@ public class BienLaiXuatDAO extends DAO {
         System.out.println("BienLaiNhapDAO " + pham.getIdMatHang());
         ////////////// // //
         try {
-            String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
-                    + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
-            System.out.println(sql2);
-            stm = con.prepareStatement(sql2,Statement.RETURN_GENERATED_KEYS);
-            int maxId=stm.executeUpdate();
-            if(maxId>0){
-                ResultSet resultSet=stm.getGeneratedKeys();
-                while(resultSet.next()){
-                    maxId=resultSet.getInt(1);
-                }
-            }
-            idBienLaiKho = "'" + (maxId) + "',";
-            String sql4 = "update [BienLaiKho] set soLuong = soLuong - " + bienLaiXuat.getSoLuong() + " where idBienLaiKho=" + pham.getBienLaiKho().getId();
-            System.out.println(sql4);
-            String sql3 = "insert into [SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
-                    + " values(" + idBienLaiKho + maSanPham + gia + hanSuDung + idMatHang + ")";
+           
             String sql = "insert into [BienLaiXuat] (idBienLaiKho,tiLeThue,idCuaHang,idNhanVien,tiLeLai)"
-                    + " values(" + idBienLaiKho + tiLeThue + idCuaHang + idNhanVien + tiLeLai + ")";
+                    + " values(" + idBienLaiKho + soLuong + idCuaHang + idNhanVien + tiLeLai + ")";
             
-            stm = con.prepareStatement(sql3);
-            stm.executeUpdate();
+            System.out.println(sql);
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
-            stm = con.prepareStatement(sql4);
-            stm.executeUpdate();
-            con.commit();
+          
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiXuatDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
             return false;
-        } finally {
-            try {
-                stm.close();
-
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
-        }
+        } 
         return true;
     }
 }

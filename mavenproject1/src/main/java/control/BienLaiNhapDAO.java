@@ -33,23 +33,23 @@ public class BienLaiNhapDAO extends DAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 BienLaiNhap bienLaiNhap = new BienLaiNhap();
-                bienLaiNhap.setIdBienLaiNhap(rs.getInt(1));
-                bienLaiNhap.setId(rs.getInt(2));// set Id bien lai kho
+                bienLaiNhap.setIdBienLaiNhap(rs.getInt("idBienLaiNhap"));
+                bienLaiNhap.setId(rs.getInt("idBienLaiKho"));// set Id bien lai kho
                 HopDong dong = new HopDong();
-                dong.setId(rs.getInt(3));
+                dong.setId(rs.getInt("idHopDong"));
                 PhieuThuChi chi = new PhieuThuChi();
-                chi.setIdPhieuThuChi(rs.getInt(4));
+                chi.setIdPhieuThuChi(rs.getInt("idPhieuThuChi"));
                 NhanVien nhanVien = new NhanVien();
-                nhanVien.setId(rs.getInt(5));
+                nhanVien.setId(rs.getInt("idNhanVien"));
                 ///////////////
                 bienLaiNhap.setHopDong(dong);
                 bienLaiNhap.setPhieuThuChi(chi);
                 bienLaiNhap.setNhanVien(nhanVien);
-                bienLaiNhap.setId(rs.getInt(6));
-                bienLaiNhap.setMaBienLai(rs.getString(7));
-                bienLaiNhap.setNgayLap(rs.getString(8));
+                bienLaiNhap.setId(rs.getInt("idBienLaiNhap"));
+                bienLaiNhap.setMaBienLai(rs.getString("maBienLai"));
+                bienLaiNhap.setNgayLap(rs.getString("ngayLap"));
                 Kho k = new Kho();
-                k.setId(rs.getInt(9));
+                k.setId(rs.getInt("idKho"));
                 bienLaiNhap.setKho(k);
                 bienLaiNhap.setSoLuong(rs.getInt(10));
                 listBienLaiNhap.add(bienLaiNhap);
@@ -92,9 +92,9 @@ public class BienLaiNhapDAO extends DAO {
         try {
 
             String sql2 = "insert into [BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
-
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
             int maxId;
+            System.out.println(sql2);
             stm = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
             maxId = stm.executeUpdate();
             if (maxId > 0) {
@@ -131,14 +131,7 @@ public class BienLaiNhapDAO extends DAO {
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+
             return false;
         }
         return true;
@@ -177,7 +170,7 @@ public class BienLaiNhapDAO extends DAO {
                     break;
                 }
             }
-          
+
             maSanPham = "'" + (pham.getMaSp() + "" + maxId) + "',";
             idBienLaiKho = "'" + (maxId) + "',";
             System.out.println("maxID" + (maxId));
@@ -193,15 +186,7 @@ public class BienLaiNhapDAO extends DAO {
             stm.close();
         } catch (Exception e) {
             e.printStackTrace();
-            
             return false;
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
         }
         return true;
     }
@@ -231,22 +216,8 @@ public class BienLaiNhapDAO extends DAO {
             stm.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+
             return false;
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
         }
         return true;
     }

@@ -25,6 +25,10 @@ public class GDQuanLiKho extends javax.swing.JFrame {
     public GDQuanLiKho(NhanVien nv) {
         initComponents();
         this.nv = nv;
+        jLabel7.setText(nv.getHoTen());
+        jLabel8.setText(nv.getVaiTro());
+        jLabel10.setText(nv.getSoDienThoai());
+        jLabel9.setText(nv.getEmail());
     }
 
     /**
@@ -76,6 +80,11 @@ public class GDQuanLiKho extends javax.swing.JFrame {
         });
 
         jButton1.setText("Đăng Xuất");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -126,7 +135,7 @@ public class GDQuanLiKho extends javax.swing.JFrame {
 
         jLabel4.setText("SDT");
 
-        jLabel5.setText("Mã Nhân Viên");
+        jLabel5.setText("Vai Trò");
 
         jLabel6.setText("Email");
 
@@ -252,6 +261,11 @@ public class GDQuanLiKho extends javax.swing.JFrame {
         dXuatHangFrm.setLocationRelativeTo(null);
         dXuatHangFrm.setVisible(true);
     }//GEN-LAST:event_jButtonXuatHangActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

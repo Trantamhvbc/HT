@@ -13,9 +13,18 @@ public class BienLaiXuat extends BienLaiKho{
     private int idBienLaiXuat;
     private int tiLeThue;
     private int tiLeLai;
+    private int soLuong;
     private CuaHang cuaHang;
     private NhanVien nv;
 
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+    
     public CuaHang getCuaHang() {
         return cuaHang;
     }

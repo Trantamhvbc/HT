@@ -141,7 +141,7 @@ public class GDBanHang extends javax.swing.JFrame {
     }
 
     void loadSanPham() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Mặt Hàng", "Tiền Mặt Hàng", "số lượng", "1", "?", "?"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Sản Phẩm", "Tiền Mặt Hàng", "số lượng", "1", "?", "?"}, 0);
         defaultTableModel.setRowCount(0);
         jTableSanPham.setModel(defaultTableModel);
         jTableSanPham.getColumnModel().getColumn(0).setPreferredWidth(5);

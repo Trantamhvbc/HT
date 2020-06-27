@@ -38,13 +38,7 @@ public class HopDongDAO extends DAO{
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return dong;
 
     }

@@ -37,12 +37,6 @@ public class ChiNhanhDAO extends DAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
         }
         return chiNhanh;
 
@@ -65,13 +59,7 @@ public class ChiNhanhDAO extends DAO {
 
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                stm.close();
-            } catch (SQLException ex) {
-                //
-            }
-        }
+        } 
         return listChiNhanh;
     }
 }
