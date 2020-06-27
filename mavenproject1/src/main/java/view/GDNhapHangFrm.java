@@ -429,12 +429,22 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         jTextFieldMaBienLai.setEditable(false);
 
         jComboBoxKho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kho Hà Nội", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxKho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxKhoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Nhân viên nhập");
 
         jLabel1.setText("Ngày");
 
         jComboBoxNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "NV Nguyễn Thị Loan", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxNhanVienActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Số phiếu");
 
@@ -770,7 +780,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel9)
                     .addComponent(jSpinnerSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1250,6 +1260,15 @@ public class GDNhapHangFrm extends javax.swing.JFrame implements Job {
         dXacNhanNhapHang.setLocationRelativeTo(null);
         dXacNhanNhapHang.setVisible(true);
     }//GEN-LAST:event_jButtonThanhToanActionPerformed
+
+
+    private void jComboBoxKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxKhoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxKhoActionPerformed
+
+    private void jComboBoxNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxNhanVienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxNhanVienActionPerformed
 
     private void jButtonXoaDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonXoaDongActionPerformed
         int row = jTableMatHangThem.getSelectedRow();
