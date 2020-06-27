@@ -52,7 +52,7 @@ public class SPDBDAO extends DAO{
         ArrayList<RecordSanPham> res =  new ArrayList();
         String sql = "select MatHang.*,SanPham.*, BienLaiKho.soLuong from  [MatHang],[SanPham] ,\n" +
                 "[BienLaiKho] , [BienLaiXuat] WHERE SanPham.idBienLaiKho = BienLaiKho.idBienLaiKho \n" +
-                "and MatHang.idMatHang = SanPham.idMatHang and BienLaiKho.idBienLaiKho = BienLaiXuat.idBienLaiKho and BienLaiKho.soLuong > 0";
+                "and MatHang.idMatHang = SanPham.idMatHang and BienLaiKho.idBienLai Kho = BienLaiXuat.idBienLaiKho and BienLaiKho.soLuong > 0";
         try {
             
             PreparedStatement prstm = con.prepareStatement(sql);

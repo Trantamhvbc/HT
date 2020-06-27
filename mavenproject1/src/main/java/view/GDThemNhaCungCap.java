@@ -55,44 +55,8 @@ public class GDThemNhaCungCap extends javax.swing.JFrame {
         initComponents();
          loadNV();
         createNhaCungCap();
-        addActionListenerButton(jButtonLuu);
     }
-    void addActionListenerButton(JButton button) {
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                NhaCungCap1DAO nccDao = new NhaCungCap1DAO();
-                NhaCungCap ncc = new NhaCungCap();
-                String ma = jTextFieldMa.getText();
-                String ten = jTextFieldTen.getText();
-                boolean check = true;
-                if (ten.equals("")) {
-                    check = false;
-                    JOptionPane.showMessageDialog(jTextFieldTen, "Không được để trống tên nhà cung cấp!", "Warning", JOptionPane.WARNING_MESSAGE);
-                    jTextFieldTen.requestFocus();
-                }
-                String email= jTextFieldEmail.getText();
-                String sdt= jTextFieldSdt.getText();
-                
-
-                ncc.setTen(ten);
-                ncc.setSodienthoai(sdt);
-                ncc.setEmail(email);
-                
-                
-//                ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
-                if (check) {
-                    nccDao.themNhaCungCap(ncc);
-                    
-                    
-                    JOptionPane.showMessageDialog(button, "Đã thêm nhà cung cấp " + ma, "Thêm thành công", JOptionPane.INFORMATION_MESSAGE);
-                    createNhaCungCap();
-                }
-            }
-
-        });
-    }
+    
 
     int countDigit(int number) {
         int count = 0;

@@ -73,25 +73,9 @@ public class HopDong2DAO extends DAO {
             stm = con.prepareStatement(sql);
             stm.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
-            try {
-                if (con != null) {
-                    con.rollback();
-                    System.out.println("roll back...HopDongDAO");
-                }
-            } catch (SQLException ex2) {
-                ex2.printStackTrace();
-            }
+            
             return false;
-        } finally {
-            try {
-                stm.close();
-
-            } catch (SQLException ex3) {
-                //
-                ex3.printStackTrace();
-            }
-        }
+        } 
         return true;
     }
 }
