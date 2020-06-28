@@ -76,7 +76,7 @@ public class CuaHangDAO extends DAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         int idCuaHang = 0;
-        String sql = "select *  from [CuaHangHoaQua].[dbo].[CuaHang]";
+        String sql = "select *  from [CuaHang]";
         try {
             stm = getCon().prepareStatement(sql);
             rs = stm.executeQuery();
