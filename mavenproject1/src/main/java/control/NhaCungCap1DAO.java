@@ -25,7 +25,7 @@ public class NhaCungCap1DAO extends DAO {
     public ArrayList<NhaCungCap> getAllNhaCungCap() {
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String sql = "select *  from [CuaHangHoaQua].[dbo].[NhaCungCap]";
+        String sql = "select *  from [NhaCungCap]";
         ArrayList<NhaCungCap> listNhaCC = new ArrayList<>();
         try {
             stm = con.prepareStatement(sql);

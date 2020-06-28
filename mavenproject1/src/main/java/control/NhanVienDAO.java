@@ -219,7 +219,7 @@ public class NhanVienDAO extends DAO {
     public int insertNV(NhanVien nv) {
         PreparedStatement pre = null;
         try {
-            String sql = "insert into [CuaHangHoaQua].[dbo].NhanVien (vaiTro,username,[password],idBoPhan,idCuaHang,idNguoi) "
+            String sql = "insert into NhanVien (vaiTro,username,[password],idBoPhan,idCuaHang,idNguoi) "
                     + "values (?,?,?,?,?,?)";
             pre = getCon().prepareStatement(sql);
             pre.setString(1, nv.getVaiTro());
@@ -246,7 +246,7 @@ public class NhanVienDAO extends DAO {
     public int deleteNV(NhanVien nv) {
         PreparedStatement pre = null;
         int idNV = nv.getIdNhanVien();
-        String sql = "delete from [CuaHangHoaQua].[dbo].[NhanVien] WHERE idNhanVien = " + idNV + ";";
+        String sql = "delete from [NhanVien] WHERE idNhanVien = " + idNV + ";";
         try {
             pre = getCon().prepareStatement(sql);
             return pre.executeUpdate();
