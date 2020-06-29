@@ -151,7 +151,7 @@ public class GDTonQuy extends javax.swing.JFrame {
 
     void loadPhieuThuChi() {
 
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Số phiếu", "Loại phiếu", "Ngày", "Diễn giải", "LyDo", "Thu", "Chi", "Chuyển khoản"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Số phiếu", "Loại phiếu", "Ngày", "Diễn giải", "LyDo", "chi", "Thu", "Chuyển khoản"}, 0);
         defaultTableModel.setRowCount(0);
         jTablePhieuThuChi.setModel(defaultTableModel);
         jTablePhieuThuChi.getColumnModel().getColumn(0).setPreferredWidth(5);
