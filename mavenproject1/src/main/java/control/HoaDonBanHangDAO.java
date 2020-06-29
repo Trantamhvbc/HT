@@ -141,7 +141,7 @@ public class HoaDonBanHangDAO extends DAO {
      public ArrayList<HoaDonBanHang> getHoaDonBanHangAndSPDB() {
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String sql = "SELECT HoaDonBanHang.idHoaDonBanHang,SPDB.idSanPham,MatHang.idMatHang FROM [CuaHangHoaQua2].dbo.[HoaDonBanHang],[CuaHangHoaQua2].dbo.[SanPham], [CuaHangHoaQua2].dbo.SPDB,[CuaHangHoaQua2].dbo.[MatHang]\n" +
+        String sql = "SELECT HoaDonBanHang.idHoaDonBanHang,SPDB.idSanPham,MatHang.idMatHang FROM [HoaDonBanHang],[SanPham], SPDB,[MatHang]\n" +
 "WHERE SPDB.idHoaDonBanHang = HoaDonBanHang.idHoaDonBanHang AND SPDB.idSanPham = SanPham.idSanPham AND MatHang.idMatHang = SanPham.idMatHang ORDER BY HoaDonBanHang.idHoaDonBanHang";
         ArrayList<HoaDonBanHang> hoaDonBanHangs = new ArrayList<>();
         int i_size = 0;

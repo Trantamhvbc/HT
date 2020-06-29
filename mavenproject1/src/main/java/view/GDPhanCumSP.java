@@ -59,7 +59,7 @@ public class GDPhanCumSP extends javax.swing.JFrame {
         int j = 1;
         for(MatHang i : tmp){
             model1.addRow(new Object[]{
-                    j++, i.getMaMatHang() ,i.getTenMatHang(), i.getDonViTinh()});
+                    j++, i.getIdMatHang() ,i.getTenMatHang(), i.getDonViTinh()});
         }
     }
     public void resetTable(){

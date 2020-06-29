@@ -39,6 +39,9 @@ public ArrayList< ArrayList<MatHang> > clustering(double  threshold,int MinNumbe
     ArrayList<MatHang> listMH = new  MatHangDAO().getAllMatHang();
     ArrayList< ArrayList<MatHang> > res = new ArrayList<>();
     Map<Pair,Double> probabilityMH = new AssistClustering().getsimiler(listMH, MinNumber);
+    for(Pair i : probabilityMH.keySet()){
+        System.out.println(probabilityMH.get(i));
+    }
     for(MatHang i : listMH){
         if(res.size() == 0){
             ArrayList<MatHang> tmp = new ArrayList<>();
@@ -70,11 +73,12 @@ public ArrayList< ArrayList<MatHang> > clustering(double  threshold,int MinNumbe
                 }
                 else{
                     res.get(index).add(i);
+                    System.out.println( i.getIdMatHang() );
                     System.out.println("s  ss kkas " + res.get(index).size());
                 }
             }
         }
-        }
+    }
     //for()
     int i = 0;
     while(i < res.size()){

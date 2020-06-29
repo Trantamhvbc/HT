@@ -27,7 +27,7 @@ public class MatHangDAO extends DAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            String sql = "SELECT * FROM [CuaHangHoaQua2].dbo.MatHang WHERE idMatHang = '"+idMatHang+"'";
+            String sql = "SELECT * FROM MatHang WHERE idMatHang = '"+idMatHang+"'";
             stm = con.prepareStatement(sql);
             rs = stm.executeQuery();
             MatHang res = new MatHang();
