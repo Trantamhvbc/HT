@@ -234,6 +234,7 @@ public class GDXacNhanBanHang extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(getClass().getResource("/imgCuaHangBanHoaQua/icons8_ok_48px.png"));
         JOptionPane.showMessageDialog(null, "Đã thanh toán thành công cho khách hàng", "thanh toán thành công", JOptionPane.INFORMATION_MESSAGE, icon);
         this.h.addTongTien(tienHang);
+        this.h.HH();
         this.dispose();
 
     }//GEN-LAST:event_jButtonDongBillVaInActionPerformed

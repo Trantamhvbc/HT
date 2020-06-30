@@ -160,7 +160,7 @@ public class GDBanHang extends javax.swing.JFrame {
 
     void loadSanPham() {
         SPDBDAO spdao = new SPDBDAO();
-        listSanPham2 = spdao.getAllSanPhamTrenCuaHang();
+        //listSanPham2 = spdao.getAllSanPhamTrenCuaHang();
         DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã Sản Phẩm", "Tiền Mặt Hàng", "Gia", "HSD", "DVT", "soLuong"}, 0);
         defaultTableModel.setRowCount(0);
         jTableSanPham.setModel(defaultTableModel);
@@ -217,7 +217,14 @@ public class GDBanHang extends javax.swing.JFrame {
 
         defaultTableModel.fireTableDataChanged();
     }
-
+    public void HH(){
+        this.hoadonDonBanHang =  new HoaDonBanHang();
+        while(this.listSanPhamSelected.size() > 0){
+            this.listSanPhamSelected.remove(0);
+        }
+        System.out.println("da vao xoa");
+        loadSanPhamDaChon();
+    }
     void loadSanPhamDaChon() {
         DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "tên mặt hàng", "Số Lượng", "đơn vị", "giá", "Thành Tiền"}, 0);
         defaultTableModel.setRowCount(0);
@@ -703,12 +710,13 @@ public class GDBanHang extends javax.swing.JFrame {
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         loadSanPham(selectedKho);
                         hoadonDonBanHang = new HoaDonBanHang();
-
+                        
                         loadSanPhamDaChon();
                         jLabel7.setText(0 + "");
                     }
                 }
             });
+           
             dXacNhanBanHang.pack();
             dXacNhanBanHang.setLocationRelativeTo(null);
             dXacNhanBanHang.setVisible(true);
