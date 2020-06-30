@@ -77,7 +77,7 @@ public class GDBanHang extends javax.swing.JFrame {
         loadSanPhamDaChon();
         loadTongTien();
         loadChoseDay();
-        loadUpdateDB();
+      //  loadUpdateDB();
 
     }
 
@@ -112,6 +112,7 @@ public class GDBanHang extends javax.swing.JFrame {
     @Override
     protected void processWindowEvent(final WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            back.setTongTien(tongtien);
             back.dangXuat();
             this.dispose();
         }
@@ -698,7 +699,7 @@ public class GDBanHang extends javax.swing.JFrame {
                             "Exit Application",
                             JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
-
+                        back.setTongTien(tongtien);
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         loadSanPham(selectedKho);
                         hoadonDonBanHang = new HoaDonBanHang();

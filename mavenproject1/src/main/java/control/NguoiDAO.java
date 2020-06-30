@@ -41,7 +41,7 @@ public class NguoiDAO extends DAO {
     public int insertNguoi(Nguoi nguoi) {
         PreparedStatement preparedStatement = null;
         try {
-            String sql = "insert into [CuaHangHoaQua].[dbo].Nguoi (email,ngaySinh,gioiTinh,hocVan,diaChi,hoTen) values(?,?,?,?,?,?);" +
+            String sql = "insert into Nguoi (email,ngaySinh,gioiTinh,hocVan,diaChi,hoTen) values(?,?,?,?,?,?);" +
                     "SELECT SCOPE_IDENTITY()";
             preparedStatement = getCon().prepareStatement(sql);
             preparedStatement.setString(1, nguoi.getEmail());
@@ -67,7 +67,7 @@ public class NguoiDAO extends DAO {
     public int updateNguoi(Nguoi nguoi) {
         PreparedStatement preparedStmt = null;
         try {
-            String query = "update [CuaHangHoaQua].[dbo].Nguoi set email= ? , ngaySinh = ? , gioiTinh = ? , hocVan = ? , diaChi =?, hoTen = ? where idNguoi = ?";
+            String query = "update Nguoi set email= ? , ngaySinh = ? , gioiTinh = ? , hocVan = ? , diaChi =?, hoTen = ? where idNguoi = ?";
             preparedStmt = getCon().prepareStatement(query);
             preparedStmt.setString(1, nguoi.getEmail());
             preparedStmt.setString(2, nguoi.getNgaySinh());
@@ -86,7 +86,7 @@ public class NguoiDAO extends DAO {
     public int getNguoiById(Nguoi nguoi) {
         PreparedStatement preparedStatement = null;
         try {
-            String sql = "insert into [CuaHangHoaQua].[dbo].Nguoi (id, email,ngaySinh,gioiTinh,hocVan,diaChi,hoTen) values(?,?,?,?,?,?);" +
+            String sql = "insert into Nguoi (id, email,ngaySinh,gioiTinh,hocVan,diaChi,hoTen) values(?,?,?,?,?,?);" +
                     "SELECT SCOPE_IDENTITY()";
             preparedStatement = getCon().prepareStatement(sql);
             preparedStatement.setString(1, nguoi.getEmail());

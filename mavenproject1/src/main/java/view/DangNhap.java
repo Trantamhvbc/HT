@@ -205,13 +205,27 @@ public class DangNhap extends javax.swing.JFrame {
                 GDQuanLiKho chuyen =  new GDQuanLiKho(out);
                 chuyen.setVisible(true);
                 this.dispose();
-
+                
             }
             if (out.getVaiTro().equals("Kế toán")) {
                 GDKeToan chuyen = new GDKeToan(out);
                 chuyen.setVisible(true);
                 this.dispose();
             }
+            if(out.getVaiTro().equals("Quản lí cửa hàng")){
+                GDQuanLiCuaHang  chuyen = new GDQuanLiCuaHang(out);
+                chuyen.setVisible(true);
+                this.dispose();
+            }
+            if(out.getVaiTro().equals("Quản lí nhân viên")){
+                GDQuanLyNhanVien chuyen = new GDQuanLyNhanVien();
+                chuyen.setVisible(true);
+                this.dispose();
+            }
+            if(out.getVaiTro().equals("Quản lí cửa hàng")){
+                
+            }
+            
         }
         else{
             JOptionPane.showMessageDialog( new Frame(), "Tài Khoản Hoặc Mật Khẩu Không Chính Xác");
